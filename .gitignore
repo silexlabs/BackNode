@@ -1,0 +1,11 @@
+*.css
+*.js.map
+*.DS_Store
+.temp
+.cache
+node_modules
+bower_components
+dist/*.js
+dist/*.html
+dist/*.css
+

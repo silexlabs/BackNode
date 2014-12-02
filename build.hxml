@@ -1,0 +1,4 @@
+backnode.App
+-js dist/backnode.js
+-cp src
+

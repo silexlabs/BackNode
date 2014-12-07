@@ -2,9 +2,11 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 
+gulp.task('default', ['html', 'css', 'bower']);
+
 var jade = require('gulp-jade');
 gulp.task('html', function() {
-  gulp.src('./src/**/*.jade')
+  return gulp.src('./src/**/*.jade')
   .pipe(sourcemaps.init())
   .pipe(jade())
   .pipe(concat('backnode.html'))
@@ -12,13 +14,19 @@ gulp.task('html', function() {
   .pipe(gulp.dest('./dist/'))
 });
 
-
 var sass = require('gulp-sass');
 gulp.task('css', function () {
-  gulp.src('./src/**/*.scss')
+  return gulp.src('./src/**/*.scss')
   .pipe(sourcemaps.init())
   .pipe(sass())
   .pipe(concat('backnode.css'))
   .pipe(sourcemaps.write())
   .pipe(gulp.dest('./dist/'));
 });
+
+var bower = require('gulp-bower');
+gulp.task('bower', function() {
+  return bower()
+    .pipe(gulp.dest('./dist/lib/'));
+});
+

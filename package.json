@@ -24,6 +24,7 @@
     "gulp-jade": "~0.10.0",
     "gulp-sass": "~1.1.0",
     "gulp-concat": "~2.4.2",
-    "gulp-sourcemaps": "~1.2.8"
+    "gulp-sourcemaps": "~1.2.8",
+    "gulp-bower": "0.0.7"
   }
 }

@@ -1,4 +1,6 @@
 backnode.App
 -js dist/backnode.js
 -cp src
-
+-cmd npm install
+-cmd bower install
+-cmd gulp

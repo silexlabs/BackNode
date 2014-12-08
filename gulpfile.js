@@ -10,7 +10,7 @@ gulp.task('html', function() {
   return gulp.src('./src/index.jade')
   .pipe(sourcemaps.init())
   .pipe(jade())
-  .pipe(concat('backnode.html'))
+  .pipe(concat('index.html'))
   .pipe(sourcemaps.write())
   .pipe(gulp.dest('./dist/'))
 });

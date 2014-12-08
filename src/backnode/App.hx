@@ -16,11 +16,16 @@ class App {
 
     // stage
     var stage = new Stage(element);
-    stage.setUrl('thinksimple/').then(function(doc) {
-      wysiwyg.setContainer(doc.body);
-      return doc;
-    })/*.catch(function(e) {
-      trace('error!', e);
-    })*/;
+
+    // file service
+    var fileService = new FileService();
+    fileService.open().then(function(blob) {
+      stage.setUrl(blob.url).then(function(doc) {
+        wysiwyg.setContainer(doc.body);
+        return doc;
+      })/*.catch(function(e) {
+        trace('error!', e);
+      })*/;
+    });
   };
 }

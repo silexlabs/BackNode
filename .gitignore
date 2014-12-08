@@ -8,4 +8,6 @@ bower_components
 dist/*.js
 dist/*.html
 dist/*.css
+dist/lib/*
+!dist/lib/.gitignore
 

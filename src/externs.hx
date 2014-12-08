@@ -5,7 +5,10 @@ import js.html.Document;
 extern class Promise<T> {
   public function new(): Void;
   public function then(cbk: T -> Void): Promise<T>;
-  public function error(cbk: js.Error -> Void): Promise<T>;
+  /*
+  // FIXME: this method is supposed to be called catch
+  public function catch(cbk: js.Error -> Void): Promise<T>;
+  */
 }
 
 
@@ -26,8 +29,11 @@ extern class Wysiwyg {
   public function new(): Void;
   public function setSelectionMode(enableSelection: Bool): Void;
   public function setContainer(element: Element): Void;
-  public var onBeforeSelect: Element -> Bool;
-  public var onSelect: Array<Element> -> Void;
+  public function getSelected(): Array<Element>;
+  public function setBeforeSelect(onBeforeSelect: Element -> Bool): Void;
+  public function getBeforeSelect(): Element -> Bool;
+  public function setOnSelect(onSelect: Void -> Void): Void;
+  public function getOnSelect(): Void -> Void;
 }
 
 

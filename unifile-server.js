@@ -51,7 +51,7 @@ function onCatchError(err) {
 var options = unifile.defaultConfig;
 
 // change www root
-options.www.ROOT = __dirname + '/dist/';
+options.www.ROOT = __dirname + '/dist';
 
 // add static folders
 options.staticFolders.push(
@@ -61,7 +61,7 @@ options.staticFolders.push(
     },
     // debug silex, for js source map
     {
-        name: '/js/src',
+        name: '/src',
         path: __dirname + '/src'
     }
 );

@@ -1,4 +1,5 @@
 backnode.App
 -js dist/backnode.js
 -cp src
+-cp submodules/cloud-explorer/src
 -debug

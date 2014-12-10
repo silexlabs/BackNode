@@ -10,19 +10,11 @@ html(lang='en')
     link(href='lib/responsize/dist/responsize.css', rel='stylesheet')
     script(src='lib/responsize/dist/responsize.js')
 
-    // cloud explorer imports
-    script(src="lib/bower-cloud-explorer/app/scripts/cloud-explorer.js")
-
     // backnode includes
     link(href='backnode.css', rel='stylesheet')
     script(src='backnode.js')
 
   body
-    // ce iframe
-    iframe(id="ce-js", frameborder="no", scrolling="no", allowfullscreen="yes",
-      data-ce-unifile-url="/api/1.0/"
-      data-ce-path="./lib/bower-cloud-explorer/app/")
-
     // backnode app
     #app.backnode-app
       include backnode/App.jade

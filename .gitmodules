@@ -1,0 +1,3 @@
+[submodule "submodules/cloud-explorer"]
+	path = submodules/cloud-explorer
+	url = git@github.com:silexlabs/cloud-explorer.git

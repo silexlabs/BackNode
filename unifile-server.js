@@ -18,18 +18,18 @@ app.use('/', multipart({limit: '100mb'}));
 
 // parse data for post and get requests
 app.use('/', bodyParser.urlencoded({
-  extended: true,
-  limit: '10mb'
+    extended: true,
+    limit: '10mb'
 }));
 app.use('/', bodyParser.json({limit: '10mb'}));
 app.use('/', cookieParser());
 
 // session management
 app.use('/', session({
-  secret: 'responsize default secret',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 } // 1 week
+    secret: 'responsize default secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 } // 1 week
 }));
 
 // ********************************
@@ -72,6 +72,5 @@ app.use('/api', unifile.middleware(express, app, options));
 // server 'loop'
 var port = process.env.PORT || 6969; // 6805 is the date of sexual revolution started in paris france 8-)
 app.listen(port, function() {
-  console.log('Listening on ' + port);
+    console.log('Listening on ' + port);
 });
-

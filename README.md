@@ -14,6 +14,7 @@ Please use the `.editorconfig` file to develop so the code will stay clean.
 * [node.js](http://nodejs.org/) installed
 * [NPM](https://www.npmjs.com/) installed
 * [gulp](http://gulpjs.com/) installed
+* [jade](http://jade-lang.com/) installed
 
 ```shell
 $ npm install
@@ -25,9 +26,14 @@ $ node unifile-server.js
 
 ```shell
 $ node unifile-server.js
-$ gulp watch
+$ gulp
 ```
 Then open a browser at [http://0.0.0.0:6969](http://0.0.0.0:6969)
+
+To get a live reload, just use gulp command
+```shell
+$ gulp watch
+```
 
 ###Philosophy
 

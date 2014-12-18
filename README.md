@@ -25,8 +25,8 @@ $ node unifile-server.js
 ###Contribute
 
 ```shell
-$ node unifile-server.js
 $ gulp
+$ node unifile-server.js
 ```
 Then open a browser at [http://0.0.0.0:6969](http://0.0.0.0:6969)
 

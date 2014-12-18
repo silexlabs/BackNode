@@ -19,7 +19,7 @@ Please use the `.editorconfig` file to develop so the code will stay clean.
 ```shell
 $ npm install
 $ bower install
-$ node unifile-server.js
+$ gulp && node unifile-server.js
 ```
 
 ###Contribute

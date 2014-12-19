@@ -2,9 +2,9 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 
-gulp.task('default', ['js', 'html', 'css', 'bower']);
+gulp.task('default', ['template', 'js', 'html', 'css', 'bower']);
 
-// html / jade
+// build / copy -> html / jade
 var jade = require('gulp-jade');
 gulp.task('html', function() {
     return gulp.src('./src/index.jade')
@@ -15,7 +15,7 @@ gulp.task('html', function() {
         .pipe(gulp.dest('./dist/'))
 });
 
-// css / sass
+// build / copy -> css / sass
 var sass = require('gulp-sass');
 gulp.task('css', function () {
     return gulp.src('./src/index.scss')
@@ -26,14 +26,20 @@ gulp.task('css', function () {
         .pipe(gulp.dest('./dist/'));
 });
 
-// libs
+// update / copy -> libs
 var bower = require('gulp-bower');
 gulp.task('bower', function() {
     return bower()
         .pipe(gulp.dest('./dist/lib/'));
 });
 
-// haxe
+// copy -> static
+gulp.task('template', function(){
+  gulp.src(["./static/templates/**/*.*"], { base: './static' })
+  .pipe(gulp.dest('dist'));
+});
+
+// build / copy -> haxe
 var spawn = require('child_process').spawn;
 gulp.task('js', function(){
     var child = spawn("haxe", ["build.hxml"]);

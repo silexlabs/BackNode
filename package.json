@@ -4,7 +4,8 @@
   "homepage": "http://backnode.io",
   "authors": [
     "lexoyo <a.hoyau@silexlabs.org>",
-    "Ronan Drouglazet <ronan.drouglazet@gmail.com>"
+    "Ronan Drouglazet <ronan.drouglazet@gmail.com>",
+    "Jean-Baptiste Richardet <>"
   ],
   "description": "A back office for your users to edit your HTML pages.",
   "main": "dist/backnode.js",
@@ -30,7 +31,7 @@
   },
   "devDependencies": {
     "jade": "latest",
-    "sass": "latest",
+    "node-sass": "latest",
     "bower": "latest",
     "watch": "latest"
   },
@@ -40,11 +41,8 @@
 
     "build:js": "haxe build.hxml",
     "build:html": "jade ./src/index.jade --out ./dist",
-    "build:css": "sass ./src/index.scss ./dist/backnode.css",
-    "postbuild:css": "rm -rf .sass-cache",
+    "build:css": "node-sass ./src/index.scss ./dist/backnode.css",
 
-    "clean": "rm -rf dist/*",
-    "prebuild:all": "npm run clean",
     "build:all": "npm run copy:templates && npm run copy:bower && npm run build:js && npm run build:html && npm run build:css",
 
     "start": "npm run build:all",

@@ -13,6 +13,8 @@ Please use the `.editorconfig` file to develop so the code will stay clean.
 
 * [node.js](http://nodejs.org/) installed
 * [NPM](https://www.npmjs.com/) installed
+* [Haxe](http://haxe.org/download/) installed
+* [RSYNC](http://www.rsync.net/resources/howto/windows_rsync.html) (windows only)
 
 ```shell
 $ npm install

@@ -10,15 +10,12 @@ import Externs;
 @:expose('backnode.App')
 class App {
     public function new (element: Element) {
-        // wysiwyg
         var wysiwyg = new Wysiwyg();
         wysiwyg.setSelectionMode(true);
         var curElement = null;
         wysiwyg.setOnSelect(function() {
             var elements = wysiwyg.getSelected();
-            //trace('selected: ', elements);
             for(element in elements) {
-                //trace(element.getAttribute("data-bn"));
                 if (element.getAttribute("data-bn") == "text"){
                     element.setAttribute("contenteditable", "true");
                     element.style.backgroundColor = "green";

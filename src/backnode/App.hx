@@ -6,6 +6,7 @@ import haxe.Json;
 import js.html.Element;
 
 import Externs;
+import js.html.TextAreaElement;
 
 @:expose('backnode.App')
 class App {
@@ -13,27 +14,31 @@ class App {
         // wysiwyg
         var wysiwyg = new Wysiwyg();
         wysiwyg.setSelectionMode(true);
+
+        var editor: TextAreaElement = cast js.Browser.document.getElementById("editor");
         var curElement = null;
         wysiwyg.setOnSelect(function() {
             var elements = wysiwyg.getSelected();
-            //trace('selected: ', elements);
             for(element in elements) {
-                //trace(element.getAttribute("data-bn"));
                 if (element.getAttribute("data-bn") == "text"){
-                    element.setAttribute("contenteditable", "true");
-                    element.style.backgroundColor = "green";
-                    if(curElement != null){
-                        //   if (curElement != element)
-                        //  curElement.removeAttribute("contenteditable");
-                        curElement.style.backgroundColor = "";
-                    }
-                    curElement = element;
+                    //element.setAttribute("contenteditable", "true");
+                    //element.style.backgroundColor = "green";
+                    editor.textContent = element.textContent;
+                    untyped aloha(editor);
+                    editor.nextElementSibling.onclick = function(e){
+                        element.textContent = editor.textContent;
+                        resetEditor(editor);
+                    };
+                    editor.nextElementSibling.nextElementSibling.onclick = function(e){
+                        resetEditor(editor);
+                    };
+                    element.style.border = "1px solid green";
                 } else {
-                    element.style.backgroundColor = "red";
-                    if(curElement != null)
-                        curElement.style.backgroundColor = "";
-                    curElement = element;
+                    element.style.border = "1px solid red";
                 }
+                if(curElement != null)
+                    curElement.style.border = "";
+                curElement = element;
             }
         });
 
@@ -55,5 +60,17 @@ class App {
             trace("Unable to load templates file: " + msg);
         }
         http.request();
-    };
+    }
+
+    /**
+    * Reset Aloha editor by emptying the textContent and disabling edition
+    * @param editor: The element acting as the editor to reset
+    * @return the editor for chaining purposes
+    **/
+    private inline function resetEditor(editor: Element):Element
+    {
+        editor.textContent = "";
+        untyped aloha.mahalo(editor);
+        return editor;
+    }
 }

@@ -18,5 +18,13 @@ html(lang='en')
     // backnode app
     #app.backnode-app
       include backnode/App.jade
+    form
+      p#editor.aloha-editable
+      input(type="button", value="Save")
+      input(type="button", value="Cancel")
     script.
       new backnode.App(document.getElementById('app'));
+
+    // Aloha editor
+    script(src='aloha.min.js')
+

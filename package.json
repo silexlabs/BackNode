@@ -1,10 +1,10 @@
 {
   "name": "backnode",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "homepage": "http://backnode.io",
   "authors": [
     "lexoyo <a.hoyau@silexlabs.org>",
-    "Ronan Drouglazet"
+    "Ronan Drouglazet <ronan.drouglazet@gmail.com>"
   ],
   "description": "A back office for your users to edit your HTML pages.",
   "main": "dist/backnode.js",
@@ -29,12 +29,25 @@
     "express": "~4.10.4"
   },
   "devDependencies": {
-    "gulp": "~3.8.10",
-    "gulp-jade": "~0.10.0",
-    "gulp-sass": "~1.1.0",
-    "gulp-concat": "~2.4.2",
-    "gulp-sourcemaps": "~1.2.8",
-    "gulp-bower": "0.0.7",
-    "gulp-util": "~3.0.1"
+    "jade": "latest",
+    "sass": "latest",
+    "bower": "latest",
+    "watch": "latest"
+  },
+  "scripts": {
+    "copy:templates": "rsync -a static/ dist/",
+    "copy:bower": "rsync -a bower_components/ dist/lib/",
+
+    "build:js": "haxe build.hxml",
+    "build:html": "jade ./src/index.jade --out ./dist",
+    "build:css": "sass ./src/index.scss ./dist/backnode.css",
+    "postbuild:css": "rm -rf .sass-cache",
+
+    "clean": "rm -rf dist/*",
+    "prebuild:all": "npm run clean",
+    "build:all": "npm run copy:templates && npm run copy:bower && npm run build:js && npm run build:html && npm run build:css",
+
+    "start": "npm run build:all",
+    "watch": "watch 'npm start' src/"
   }
 }

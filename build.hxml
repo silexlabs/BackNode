@@ -1,4 +1,4 @@
 backnode.App
 -js dist/backnode.js
--cp src
+-cp src/hx
 -debug

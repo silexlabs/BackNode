@@ -40,12 +40,12 @@ class App {
         // Config
         var http = new Http("/templates/templates.json");
         http.onData = function(data){
-            var config: Config = cast Json.parse(data);
+            var aTemplates: Array<String> = cast Json.parse(data);
 
              // stage
             var stage = new Stage(element);
             stage.setSize(1000, 1000);
-            stage.setUrl(config.templateUrl).then(function(doc) {
+            stage.setUrl(aTemplates[0]).then(function(doc) {
                 wysiwyg.setContainer(doc.body);
                 return doc;
             });
@@ -56,8 +56,4 @@ class App {
         }
         http.request();
     };
-}
-
-typedef Config = {
-    templateUrl: String
 }

@@ -1,2 +1,85 @@
 @import 'src/scss/App.scss';
 
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background-image: url('/img/background.png');
+    background-color: #323b46 !important;
+    background-position: center center;
+}
+
+#tools {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    width: 120px;
+    height: 100%;
+    background-color: #29313c;
+    text-align: center;
+    color: #fff;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    #menu {
+        padding-top: 30px;
+
+        ul {
+            font-size: 13px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+            margin-top: 30px;
+
+            li {
+                color: #50647b;
+                padding: 15px 0 15px 15px;
+                width: auto;
+                background: #1d222a;
+                cursor: pointer;
+
+                i {
+                    margin-right: 5px;
+                }
+            }
+
+            li:hover {
+                color: #fff;
+                background: #39b396;
+            }
+        }
+    }
+
+    #editor-switch {
+        width: 88px;
+        height: 27px;
+        margin: 20px auto 0;
+        background-image: url('/img/switch.png');
+        cursor: pointer;
+        background-size: 100% 200%;
+        background-position: 0 0;
+
+        .switch-on {
+            background-position: 0px 27px;
+        }
+    }
+
+    #background {
+        position: fixed;
+        width: 43px;
+        height: 323px;
+        background-image: url('/img/backnode.png');
+        left: 33px;
+        bottom: 50px;
+        -moz-background-size: contain;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center bottom;
+    }
+}

@@ -8,6 +8,7 @@ import js.html.Event;
 
 import Externs;
 import backnode.views.Tools;
+import backnode.views.StageView;
 import backnode.model.State;
 
 @:expose('backnode.App')
@@ -15,6 +16,7 @@ class App {
 
     public var ce: CloudExplorer;
     public var stage: Stage;
+    public var stageView: StageView;
     public var tools: Tools;
     public var wysiwyg: Wysiwyg;
 
@@ -74,6 +76,7 @@ class App {
     private function initStage(element: Element): Void {
         stage = new Stage(element);
         wysiwyg = new Wysiwyg();
+        stageView = new StageView();
     }
 
     private function initTools(): Void {

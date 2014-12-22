@@ -1,1 +1,12 @@
-include ../../bower_components/responsize/src/rsz/stage/stage.jade
+#stage-container.auto-fit
+  include ../../bower_components/responsize/src/rsz/stage/stage.jade
+  #resize-bar
+    #resolution
+      ul#resolution-presets
+        li(data-width='', data-height='') Auto
+        li(data-width='320', data-height='480') iPhone 3GS
+        li(data-width='640', data-height='960') iPhone 4
+        li(data-width='640', data-height='1136') iPhone 5
+        li(data-width='768', data-height='1024') iPad
+      span#resolution-current
+      i(class='fa fa-caret-up')

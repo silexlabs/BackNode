@@ -11,6 +11,7 @@ class StageView {
     private var stage: Element;
     private var resolution: Element;
     private var presets: Element;
+    private var cbkSizeChange: {w: Int, h: Int} -> Void;
 
     public function new(): Void {
         stage = getStage();
@@ -20,6 +21,10 @@ class StageView {
         setCurrentResolution();
 
         Browser.window.onresize = onWindowResize;
+    }
+
+    public function onSizeChange(cbk: {w: Int, h: Int} -> Void): Void {
+        cbkSizeChange = cbk;
     }
 
     private function getStage(): Element {
@@ -50,6 +55,10 @@ class StageView {
         var width: Int = w != null ? w : stage.offsetWidth;
         var height: Int = h != null ? h : stage.offsetHeight;
         resolution.innerHTML = width + 'x' + height;
+
+        if (cbkSizeChange != null) {
+            cbkSizeChange({w: width, h: height});
+        }
     }
 
     private function onWindowResize(?e: Event): Void {

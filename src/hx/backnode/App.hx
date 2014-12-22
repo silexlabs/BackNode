@@ -77,6 +77,10 @@ class App {
         stage = new Stage(element);
         wysiwyg = new Wysiwyg();
         stageView = new StageView();
+
+        stageView.onSizeChange(function(size: {w: Int, h: Int}): Void {
+            stage.setSize(size.w, size.h);
+        });
     }
 
     private function initTools(): Void {

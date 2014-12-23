@@ -81,6 +81,8 @@ class App {
         stageView.onSizeChange(function(size: {w: Int, h: Int}): Void {
             stage.setSize(size.w, size.h);
         });
+
+        stage.setSize(element.offsetWidth, element.offsetHeight);
     }
 
     private function initTools(): Void {

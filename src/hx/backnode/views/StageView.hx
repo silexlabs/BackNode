@@ -72,7 +72,7 @@ class StageView {
 
     private function clickOnPreset(e: Event): Void {
         var preset: Element = cast e.currentTarget;
-        var auto: Bool = preset.innerText == 'Auto';
+        var auto: Bool = preset.innerHTML == 'Full size';
         var width: Int = auto ?
             stage.parentElement.offsetWidth :
             Std.parseInt(preset.getAttribute('data-width'));

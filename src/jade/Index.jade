@@ -38,8 +38,7 @@ html(lang='en')
             | Save
         #logo
     // backnode app
-    #app.backnode-app
-      include src/jade/App.jade
+    include src/jade/App.jade
 
     // Cloud-Explorer
     iframe(
@@ -52,4 +51,4 @@ html(lang='en')
       data-ce-path='lib/bower-cloud-explorer/app/')
 
     script.
-      new backnode.App(document.getElementById('app'));
+      new backnode.App(document.getElementById('stage'));

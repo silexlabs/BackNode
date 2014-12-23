@@ -1,22 +1,12 @@
-.backnode-app {
+#stage {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 120px;
+  background: transparent;
 
-  .auto-fit {
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-  }
-
-  #stage-container {
-    position: absolute;
-    transition: all 1s ease-in-out;
-    -webkit-transition: all 1s ease-in-out;
-    -moz-transition: all 1s ease-in-out;
+  iframe {
     background-color: $primary-color;
     background-image: url($import-url);
     background-position: center center;
@@ -24,72 +14,53 @@
     box-shadow: #1f252c 0 0 30px;
     border: 5px solid $border-color;
     border-radius: 5px;
-
-    #stage {
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 45px;
-      background: transparent;
-
-      iframe {
-        border: 0;
-      }
-    }
-
-    #resize-bar {
-      font-family: Arial;
-      position: absolute;
-      width: 100%;
-      background-color: $secondary-color;
-      height: 45px;
-      bottom: 0;
-      left: 0;
-
-      #resolution {
-        margin: 10px;
-        padding: 5px;
-        width: 100px;
-        text-align: center;
-        color: white;
-        font-size: 16px;
-
-        i {
-          margin-left: 5px;
-        }
-
-        ul {
-          position: absolute;
-          list-style: none;
-          bottom: 39px;
-          left: 25px;
-          overflow: hidden;
-          border: 3px solid $border-color;
-          background: $border-color;
-          margin: 0;
-          padding: 0;
-
-          li {
-            border-bottom: 3px solid $border-color;
-            background: $primary-color;
-            padding: 5px 0;
-            width: 110px;
-          }
-
-          li:hover {
-            background: #424c58;
-          }
-        }
-      }
-
-      #resolution:hover {
-        background: $primary-color;
-        cursor: pointer;
-      }
-    }
-
-
   }
+
+  #resolution {
+    font-family: Arial;
+    background-color: $secondary-color;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 5px;
+    width: 100px;
+    text-align: center;
+    color: white;
+    font-size: 16px;
+
+    i {
+      margin-left: 5px;
+    }
+
+    ul {
+      position: absolute;
+      list-style: none;
+      bottom: 28px;
+      left: 0;
+      overflow: hidden;
+      border: 3px solid $border-color;
+      background: $border-color;
+      margin: 0;
+      padding: 0;
+
+      li {
+        border-bottom: 3px solid $border-color;
+        background: $primary-color;
+        padding: 5px 0;
+        width: 110px;
+      }
+
+      li:hover {
+        background: #424c58;
+      }
+    }
+  }
+
+  #resolution:hover {
+    background: $primary-color;
+    cursor: pointer;
+  }
+
 }
 
 #ce-js {

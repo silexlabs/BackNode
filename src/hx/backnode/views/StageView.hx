@@ -28,7 +28,8 @@ class StageView {
     }
 
     private function getStage(): Element {
-        return Browser.document.getElementById('stage');
+        var s: Element = Browser.document.getElementById('stage');
+        return cast s.getElementsByTagName('iframe')[0];
     }
 
     private function getResolution(): Element {
@@ -71,25 +72,14 @@ class StageView {
 
     private function clickOnPreset(e: Event): Void {
         var preset: Element = cast e.currentTarget;
-        var width: Int = Std.parseInt(preset.getAttribute('data-width'));
-        var height: Int = Std.parseInt(preset.getAttribute('data-height'));
         var auto: Bool = preset.innerText == 'Auto';
+        var width: Int = auto ?
+            stage.parentElement.offsetWidth :
+            Std.parseInt(preset.getAttribute('data-width'));
+        var height: Int = auto ?
+            stage.parentElement.offsetHeight :
+            Std.parseInt(preset.getAttribute('data-height'));
 
-        stage.parentElement.style.width = auto ? '' : width + 'px';
-        stage.parentElement.style.height = auto ? '' : (height + 45) + 'px'; // 45 because parent have 45px more than stage
-
-        centerStageContainer(stage.parentElement, width, height, auto ? true : false);
         setCurrentResolution(width, height);
-    }
-
-    private function centerStageContainer(element: Element, width: Int, height: Int, ?reset: Bool): Void {
-        element.className = reset ? 'auto-fit' : '';
-        element.style.left = element.style.top = reset ? '' : '50%';
-        element.style.marginLeft = reset ? '' : '-' + (width / 2) + 'px';
-        element.style.marginTop = reset ? '' : '-' + (height / 2) + 'px';
-
-        if (height > Browser.window.innerHeight) {
-            element.style.top = element.style.marginTop = "0";
-        }
     }
 }

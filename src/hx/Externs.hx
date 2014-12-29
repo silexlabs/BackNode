@@ -16,6 +16,13 @@ typedef Blob = {
     url: String
 }
 
+typedef CEBlob = {
+    url: String,
+    filename: String,
+    mimetype: String,
+    size: Int
+}
+
 @:native('Stage')
 extern class Stage {
     public function new(element: Element): Void;
@@ -34,6 +41,12 @@ extern class Wysiwyg {
     public function getBeforeSelect(): Element -> Bool;
     public function setOnSelect(onSelect: Void -> Void): Void;
     public function getOnSelect(): Void -> Void;
+}
+
+@:native('ce.api.CloudExplorer')
+extern class CloudExplorer {
+    static function get(?id: String): CloudExplorer;
+    public function pick(cbk: CEBlob -> Void, err: Dynamic -> Void): Void;
 }
 
 

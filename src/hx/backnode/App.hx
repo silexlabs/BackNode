@@ -4,13 +4,24 @@ import haxe.Http;
 import haxe.Json;
 
 import js.html.Element;
+import js.html.Event;
 
 import Externs;
+import backnode.views.Tools;
+import backnode.views.StageView;
+import backnode.model.State;
 
 @:expose('backnode.App')
 class App {
+
+    public var ce: CloudExplorer;
+    public var stage: Stage;
+    public var stageView: StageView;
+    public var tools: Tools;
+    public var wysiwyg: Wysiwyg;
+
     public function new (element: Element) {
-        var wysiwyg = new Wysiwyg();
+        /*var wysiwyg = new Wysiwyg();
         wysiwyg.setSelectionMode(true);
         var curElement = null;
         wysiwyg.setOnSelect(function() {
@@ -51,6 +62,51 @@ class App {
         http.onError = function(msg){
             trace("Unable to load templates file: " + msg);
         }
-        http.request();
+        http.request();*/
+
+        initCE('ce-js');
+        initStage(element);
+        initTools();
     };
+
+    private function initCE(id: String): Void {
+        ce = CloudExplorer.get(id);
+    }
+
+    private function initStage(element: Element): Void {
+        stage = new Stage(element);
+        wysiwyg = new Wysiwyg();
+        stageView = new StageView();
+
+        stageView.onSizeChange(function(size: {w: Int, h: Int}): Void {
+            stage.setSize(size.w, size.h);
+        });
+
+        stage.setSize(element.offsetWidth, element.offsetHeight);
+    }
+
+    private function initTools(): Void {
+        tools = new Tools();
+        tools.state = State.INIT;
+        tools.onOpen(function(e: Event): Void {
+            ce.pick(onFileSelected, onError);
+        });
+    }
+
+    private function onFileSelected(blob: CEBlob): Void {
+        trace(blob);
+        stage.setUrl(blob.url).then(function(doc) {
+            wysiwyg.setContainer(doc.body);
+            return doc;
+        });
+        tools.state = State.FILE_SELECTED;
+    }
+
+    private function onError(e: Dynamic): Void {
+        try {
+            trace("Error: " + Json.stringify(e));
+        } catch (e: Dynamic) {
+            trace("Error undefined");
+        }
+    }
 }

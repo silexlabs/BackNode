@@ -1,1 +1,13 @@
 include ../../bower_components/responsize/src/rsz/stage/stage.jade
+  #resolution
+    ul#resolution-presets
+      li(data-width='', data-height='') Full size
+      li(data-width='800', data-height='600') 800x600
+      li(data-width='1024', data-height='768') 1024x768
+      li(data-width='1280', data-height='720') 1280x720
+      li(data-width='320', data-height='480') iPhone 3GS
+      li(data-width='640', data-height='960') iPhone 4
+      li(data-width='640', data-height='1136') iPhone 5
+      li(data-width='768', data-height='1024') iPad
+    span#resolution-current
+    i(class='fa fa-caret-up')

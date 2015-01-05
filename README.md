@@ -13,26 +13,26 @@ Please use the `.editorconfig` file to develop so the code will stay clean.
 
 * [node.js](http://nodejs.org/) installed
 * [NPM](https://www.npmjs.com/) installed
-* [gulp](http://gulpjs.com/) installed
-* [jade](http://jade-lang.com/) installed
+* [Haxe](http://haxe.org/download/) installed
+* [RSYNC](http://www.rsync.net/resources/howto/windows_rsync.html) (windows only)
 
 ```shell
 $ npm install
 $ bower install
-$ gulp && node unifile-server.js
+$ npm start && node unifile-server.js
 ```
 
 ###Contribute
 
 ```shell
-$ gulp
+$ npm start
 $ node unifile-server.js
 ```
-Then open a browser at [http://0.0.0.0:6969](http://0.0.0.0:6969)
+Then open a browser at [http://localhost:6969](http://localhost:6969)
 
-To get a live reload, just use gulp command
+To get an automatic build when some modification append, just use npm command
 ```shell
-$ gulp watch
+$ npm run watch
 ```
 
 ###Philosophy

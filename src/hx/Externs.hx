@@ -16,6 +16,13 @@ typedef Blob = {
     url: String
 }
 
+typedef CEBlob = {
+    url: String,
+    filename: String,
+    mimetype: String,
+    size: Int
+}
+
 @:native('Stage')
 extern class Stage {
     public function new(element: Element): Void;
@@ -28,12 +35,20 @@ extern class Stage {
 extern class Wysiwyg {
     public function new(): Void;
     public function setSelectionMode(enableSelection: Bool): Void;
-    public function setContainer(element: Element): Void;
+    public function setDocument(doc: Document): Void;
     public function getSelected(): Array<Element>;
     public function setBeforeSelect(onBeforeSelect: Element -> Bool): Void;
     public function getBeforeSelect(): Element -> Bool;
     public function setOnSelect(onSelect: Void -> Void): Void;
     public function getOnSelect(): Void -> Void;
+    public function addTempStyle(url: String):Void;
+    public function addTempScript(url: String):Void;
+}
+
+@:native('ce.api.CloudExplorer')
+extern class CloudExplorer {
+    static function get(?id: String): CloudExplorer;
+    public function pick(cbk: CEBlob -> Void, err: Dynamic -> Void): Void;
 }
 
 

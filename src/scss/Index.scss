@@ -1,0 +1,83 @@
+@import 'src/scss/Common.scss';
+@import 'src/scss/App.scss';
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background-image: url($body-bg-url);
+    background-color: $primary-color !important;
+    background-position: center center;
+}
+
+#tools {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    width: 120px;
+    height: 100%;
+    background-color: $secondary-color;
+    text-align: center;
+    color: #fff;
+    overflow: hidden;
+
+    #menu {
+        padding-top: 30px;
+
+        ul {
+            font-size: 13px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+            margin-top: 30px;
+
+            li {
+                color: #50647b;
+                padding: 15px 0 15px 15px;
+                width: auto;
+                background: #1d222a;
+                cursor: pointer;
+
+                i {
+                    margin-right: 5px;
+                }
+            }
+
+            li:hover {
+                color: #fff;
+                background: #39b396;
+            }
+        }
+    }
+
+    #editor-switch {
+        width: 88px;
+        height: 27px;
+        margin: 20px auto 0;
+        background-image: url($switch-url);
+        cursor: pointer;
+        background-size: 100% 200%;
+        background-position: 0 0;
+
+    }
+    #editor-switch.switch-on {
+        background-position: 0px 27px;
+    }
+
+    #logo {
+        position: fixed;
+        width: 43px;
+        height: 323px;
+        background-image: url($logo-url);
+        left: 33px;
+        bottom: 15px;
+        -moz-background-size: contain;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center bottom;
+    }
+}

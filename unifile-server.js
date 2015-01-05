@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var multipart = require('connect-multiparty');
+var FSStore = require('connect-fs2')(session);
 
 // init express
 var app = express();
@@ -29,6 +30,9 @@ app.use('/', session({
     secret: 'backnode default secret',
     resave: false,
     saveUninitialized: false,
+    store: new FSStore({
+        dir: __dirname + '/sessions'
+    }),
     cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 } // 1 week
 }));
 

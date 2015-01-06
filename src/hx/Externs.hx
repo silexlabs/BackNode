@@ -57,3 +57,12 @@ extern class FileService {
     public function new(): Void;
     public function open(): Promise<Blob>;
 }
+
+@:native('CKEDITOR')
+extern class CKEditor{
+    public static var disableAutoInline:Bool;
+    
+    // Doesn't work. Waiting for https://github.com/HaxeFoundation/haxe/issues/3701
+    @:native("inline")
+    public static function inlineEdition(element: Element):Void;
+}

@@ -25,59 +25,10 @@ class App {
     private var stageWindow:DOMWindow;
 
     public function new (element: Element) {
-        /*var wysiwyg = new Wysiwyg();
-        wysiwyg.setSelectionMode(true);
-
-        var editor: TextAreaElement = cast js.Browser.document.getElementById("editor");
-        var curElement = null;
-        wysiwyg.setOnSelect(function() {
-            var elements = wysiwyg.getSelected();
-            for(element in elements) {
-                if (element.getAttribute("data-bn") == "text"){
-                    //element.setAttribute("contenteditable", "true");
-                    //element.style.backgroundColor = "green";
-                    editor.textContent = element.textContent;
-                    untyped aloha(editor);
-                    editor.nextElementSibling.onclick = function(e){
-                        element.textContent = editor.textContent;
-                        resetEditor(editor);
-                    };
-                    editor.nextElementSibling.nextElementSibling.onclick = function(e){
-                        resetEditor(editor);
-                    };
-                    element.style.border = "1px solid green";
-                } else {
-                    element.style.border = "1px solid red";
-                }
-                if(curElement != null)
-                    curElement.style.border = "";
-                curElement = element;
-            }
-        });
-
-        // Config
-        var http = new Http("/templates/templates.json");
-        http.onData = function(data){
-            var aTemplates: Array<String> = cast Json.parse(data);
-
-             // stage
-            var stage = new Stage(element);
-            stage.setSize(1000, 1000);
-            stage.setUrl(aTemplates[0]).then(function(doc) {
-                wysiwyg.setContainer(doc.body);
-                return doc;
-            });
-        }
-
-        http.onError = function(msg){
-            trace("Unable to load templates file: " + msg);
-        }
-        http.request();*/
-
         initCE('ce-js');
         initStage(element);
         initTools();
-    };
+    }
 
     private function initCE(id: String): Void {
         ce = CloudExplorer.get(id);
@@ -111,12 +62,19 @@ class App {
         // Activate Wysiwyg selection
         wysiwyg.setSelectionMode(true);
 
+        // Let edition only with code activation
+        CKEditor.disableAutoInline = true;
+
+        for(node in stageWindow.document.querySelectorAll("[data-bn=text]")){
+            var elem: Element = cast node;
+            elem.contentEditable = "true";
+            // Activate inline edition
+            untyped __js__("CKEDITOR.inline(elem);");
+        }
+
         wysiwyg.setOnSelect(function(){
             var selected = wysiwyg.getSelected();
-            if(selected.length > 0 && selected[0].getAttribute("data-bn") == "text"){
-                selected[0].style.backgroundColor = '#54c8eb';
-                untyped stageWindow.aloha(selected[0]);
-            }
+            selected[0].focus();
         });
     }
 
@@ -124,8 +82,6 @@ class App {
         trace(blob);
         stage.setUrl(blob.url).then(function(doc) {
             wysiwyg.setDocument(doc);
-            // Include Aloha editor
-            wysiwyg.addTempScript("//localhost:6969/lib/aloha.js");
             // Store iframe window
             stageWindow = doc.defaultView;
 

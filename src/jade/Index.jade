@@ -14,8 +14,12 @@ html(lang='en')
     // cloud-explorer
     script(src='lib/bower-cloud-explorer/app/scripts/cloud-explorer.js')
 
+    // CKEditor
+    script(src='lib/ckeditor/ckeditor.js')
+
     // backnode includes
     link(href='backnode.css', rel='stylesheet')
+    script(src='backnode.js')
 
     // font-awesome
     link(href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' rel='stylesheet')
@@ -49,12 +53,5 @@ html(lang='en')
       data-ce-unifile-url='http://localhost:6969/api/1.0/'
       data-ce-path='lib/bower-cloud-explorer/app/')
 
-    // Aloha editor
-    //script(src='lib/aloha.js')
-    script(src='backnode.js')
-
     script.
       new backnode.App(document.getElementById('stage'));
-
-
-

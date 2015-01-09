@@ -11,6 +11,8 @@ Please use the `.editorconfig` file to develop so the code will stay clean.
 
 ####Requirements
 
+This git repository is using [submodules](http://www.git-scm.com/book/en/v2/Git-Tools-Submodules). Be sure to get them to by cloning with the recursive option: `git clone --recursive https://github.com/silexlabs/BackNode.git`.
+
 * [node.js](http://nodejs.org/) installed
 * [NPM](https://www.npmjs.com/) installed
 * [Haxe](http://haxe.org/download/) installed
@@ -28,7 +30,7 @@ $ npm start && node unifile-server.js
 $ npm start
 $ node unifile-server.js
 ```
-Then open a browser at [http://0.0.0.0:6969](http://0.0.0.0:6969)
+Then open a browser at [http://localhost:6969](http://localhost:6969)
 
 To get an automatic build when some modification append, just use npm command
 ```shell

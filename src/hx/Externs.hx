@@ -35,12 +35,14 @@ extern class Stage {
 extern class Wysiwyg {
     public function new(): Void;
     public function setSelectionMode(enableSelection: Bool): Void;
-    public function setContainer(element: Element): Void;
+    public function setDocument(doc: Document): Void;
     public function getSelected(): Array<Element>;
     public function setBeforeSelect(onBeforeSelect: Element -> Bool): Void;
     public function getBeforeSelect(): Element -> Bool;
     public function setOnSelect(onSelect: Void -> Void): Void;
     public function getOnSelect(): Void -> Void;
+    public function addTempStyle(url: String):Void;
+    public function addTempScript(url: String):Void;
 }
 
 @:native('ce.api.CloudExplorer')
@@ -54,4 +56,13 @@ extern class CloudExplorer {
 extern class FileService {
     public function new(): Void;
     public function open(): Promise<Blob>;
+}
+
+@:native('CKEDITOR')
+extern class CKEditor{
+    public static var disableAutoInline:Bool;
+    
+    // Doesn't work. Waiting for https://github.com/HaxeFoundation/haxe/issues/3701
+    @:native("inline")
+    public static function inlineEdition(element: Element):Void;
 }

@@ -5,7 +5,7 @@
   "authors": [
     "lexoyo <a.hoyau@silexlabs.org>",
     "Ronan Drouglazet <ronan.drouglazet@gmail.com>",
-    "Jean-Baptiste Richardet <>"
+    "Jean-Baptiste Richardet <jb@silexlabs.org>"
   ],
   "description": "A back office for your users to edit your HTML pages.",
   "main": "dist/backnode.js",
@@ -27,7 +27,8 @@
     "cookie-parser": "~1.3.3",
     "body-parser": "~1.10.0",
     "compression": "~1.2.1",
-    "express": "~4.10.4"
+    "express": "~4.10.4",
+    "connect-fs2": "*"
   },
   "devDependencies": {
     "jade": "latest",
@@ -49,8 +50,12 @@
     "build:css": "node-sass ./src/scss/Index.scss ./dist/backnode.css",
     "watch:css": "watch 'npm run build:css' src/scss",
 
+    "build:editor": "./submodules/ckeditor-dev/dev/builder/build.sh",
+    "copy:editor": "rsync -r ./submodules/ckeditor-dev/dev/builder/release/ckeditor ./static/external_lib",
+
     "build:all": "npm run copy:templates && npm run copy:bower && npm run build:js && npm run build:html && npm run build:css",
 
+    "postinstall": "npm run build:editor && npm run copy:editor",
     "start": "npm run build:all",
     "watch": "parallelshell 'npm run watch:js' 'npm run watch:html' 'npm run watch:css'"
   }

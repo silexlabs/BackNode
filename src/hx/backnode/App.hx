@@ -9,7 +9,7 @@ import js.html.Event;
 
 import Externs;
 import js.html.TextAreaElement;
-import backnode.views.Tools;
+import backnode.views.ToolsView;
 import backnode.views.StageView;
 import backnode.model.State;
 
@@ -19,8 +19,9 @@ class App {
     public var ce: CloudExplorer;
     public var stage: Stage;
     public var stageView: StageView;
-    public var tools: Tools;
+    public var tools: ToolsView;
     public var wysiwyg: Wysiwyg;
+    public var fileSelected: CEBlob;
 
     private var stageWindow:DOMWindow;
     private var editorInstances:Array<Editor>;
@@ -32,34 +33,48 @@ class App {
         editorInstances = new Array<Editor>();
     }
 
+    // https://github.com/silexlabs/cloud-explorer
     private function initCE(id: String): Void {
         ce = CloudExplorer.get(id);
     }
 
+    // https://github.com/silexlabs/responsize
     private function initStage(element: Element): Void {
         stage = new Stage(element);
         wysiwyg = new Wysiwyg();
         stageView = new StageView();
 
+        // re set stage size when a window resize event append (or click on size selection)
         stageView.onSizeChange(function(size: {w: Int, h: Int}): Void {
             stage.setSize(size.w, size.h);
         });
 
+        // set initial size
         stage.setSize(element.offsetWidth, element.offsetHeight);
     }
 
     private function initTools(): Void {
-        tools = new Tools();
+        tools = new ToolsView();
+
+        // Just import button
         tools.state = State.INIT;
+
+        // when a click append on import button
         tools.onOpen(function(e: Event): Void {
             ce.pick(onFileSelected, onError);
         });
+
+        // when a click append on cancel button
+        tools.onCancel(function(e: Event): Void {
+            onFileSelected(fileSelected);
+        });
+
         tools.onStartEdition(function(isEditionOn: Bool){
-            if(isEditionOn){
+            if (isEditionOn) {
                 makeFieldEditable();
             }
-            else{
-                for(inst in editorInstances)
+            else {
+                for (inst in editorInstances)
                     inst.destroy();
             }
             stageWindow.document.body.classList.toggle("edition-on");
@@ -88,8 +103,9 @@ class App {
     }
 
     private function onFileSelected(blob: CEBlob): Void {
-        trace(blob);
-        stage.setUrl(blob.url).then(function(doc) {
+        fileSelected = blob;
+        // set Stage url from Cloud Explorer blob
+        stage.setUrl(fileSelected.url).then(function(doc) {
             wysiwyg.setDocument(doc);
             // Store iframe window
             stageWindow = doc.defaultView;

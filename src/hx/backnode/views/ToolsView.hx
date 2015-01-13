@@ -20,7 +20,7 @@ typedef ButtonTool = {
     show: Void -> Void
 }
 
-class Tools {
+class ToolsView {
 
     public var state(default, set): State;
     public var currentState: State;
@@ -40,11 +40,14 @@ class Tools {
         buttons.open.dom.addEventListener('click', cbk , false);
     }
 
-    public function onStartEdition(cbk: Bool -> Void):Void {
-        buttons.editionSwitch.dom.addEventListener('click', function(e){
+    public function onCancel(cbk: Event -> Void): Void {
+        buttons.cancel.dom.addEventListener('click', cbk , false);
+    }
+
+    public function onStartEdition(cbk: Bool -> Void): Void {
+        buttons.editionSwitch.dom.addEventListener('click', function (e) {
             cbk(buttons.editionSwitch.dom.classList.toggle("switch-on"));
         } , false);
-
     }
 
     public function set_state(state: State): State {

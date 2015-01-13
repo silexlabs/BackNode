@@ -15,52 +15,51 @@
     border: 5px solid $border-color;
     border-radius: 5px;
   }
+}
 
-  #resolution {
-    font-family: Arial;
-    background-color: $secondary-color;
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    padding: 5px;
-    width: 100px;
-    text-align: center;
-    color: white;
-    font-size: 16px;
+#resolution {
+  font-family: Arial;
+  background-color: $secondary-color;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 5px;
+  width: 100px;
+  text-align: center;
+  color: white;
+  font-size: 16px;
 
-    i {
-      margin-left: 5px;
-    }
-
-    ul {
-      position: absolute;
-      list-style: none;
-      bottom: 28px;
-      left: 0;
-      overflow: hidden;
-      border: 3px solid $border-color;
-      background: $border-color;
-      margin: 0;
-      padding: 0;
-
-      li {
-        border-bottom: 3px solid $border-color;
-        background: $primary-color;
-        padding: 5px 0;
-        width: 110px;
-      }
-
-      li:hover {
-        background: #424c58;
-      }
-    }
+  i {
+    margin-left: 5px;
   }
 
-  #resolution:hover {
-    background: $primary-color;
-    cursor: pointer;
-  }
+  ul {
+    position: absolute;
+    list-style: none;
+    bottom: 28px;
+    left: 0;
+    overflow: hidden;
+    border: 3px solid $border-color;
+    background: $border-color;
+    margin: 0;
+    padding: 0;
 
+    li {
+      border-bottom: 3px solid $border-color;
+      background: $primary-color;
+      padding: 5px 0;
+      width: 110px;
+    }
+
+    li:hover {
+      background: #424c58;
+    }
+  }
+}
+
+#resolution:hover {
+  background: $primary-color;
+  cursor: pointer;
 }
 
 #ce-js {

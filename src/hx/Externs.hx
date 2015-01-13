@@ -61,8 +61,14 @@ extern class FileService {
 @:native('CKEDITOR')
 extern class CKEditor{
     public static var disableAutoInline:Bool;
+    public static var currentInstance: Editor;
     
     // Doesn't work. Waiting for https://github.com/HaxeFoundation/haxe/issues/3701
     @:native("inline")
-    public static function inlineEdition(element: Element):Void;
+    public static function inlineEdition(element: Element):Editor;
+}
+
+@:native('CKEDITOR.editor')
+extern class Editor{
+    function destroy(): Void;
 }

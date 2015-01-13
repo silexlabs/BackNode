@@ -23,6 +23,7 @@ class App {
     public var wysiwyg: Wysiwyg;
 
     private var stageWindow:DOMWindow;
+    private var editorInstance:Editor;
 
     public function new (element: Element) {
         initCE('ce-js');
@@ -52,8 +53,14 @@ class App {
         tools.onOpen(function(e: Event): Void {
             ce.pick(onFileSelected, onError);
         });
-        tools.onStartEdition(function(e: Event){
-            makeFieldEditable();
+        tools.onStartEdition(function(isEditionOn: Bool){
+            if(isEditionOn){
+                makeFieldEditable();
+            }
+            else{
+                editorInstance.destroy();
+            }
+            stageWindow.document.body.classList.toggle("edition-on");
         });
     }
 
@@ -69,7 +76,7 @@ class App {
             var elem: Element = cast node;
             elem.contentEditable = "true";
             // Activate inline edition
-            untyped __js__("CKEDITOR.inline(elem);");
+            editorInstance = untyped __js__("CKEDITOR.inline(elem);");
         }
 
         wysiwyg.setOnSelect(function(){
@@ -84,6 +91,7 @@ class App {
             wysiwyg.setDocument(doc);
             // Store iframe window
             stageWindow = doc.defaultView;
+            wysiwyg.addTempStyle("http://localhost:6969/editor.css");
 
             return doc;
         });

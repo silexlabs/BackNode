@@ -40,11 +40,9 @@ class Tools {
         buttons.open.dom.addEventListener('click', cbk , false);
     }
 
-    public function onStartEdition(cbk: Event -> Void):Void {
+    public function onStartEdition(cbk: Bool -> Void):Void {
         buttons.editionSwitch.dom.addEventListener('click', function(e){
-            // Toggle edition and execute callback only if it wasn't already active
-            if(buttons.editionSwitch.dom.classList.toggle("switch-on"))
-                cbk(e);
+            cbk(buttons.editionSwitch.dom.classList.toggle("switch-on"));
         } , false);
 
     }

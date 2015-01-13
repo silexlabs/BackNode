@@ -31,7 +31,7 @@
     "connect-fs2": "*"
   },
   "devDependencies": {
-    "jade": "latest",
+    "jade": "~1.8",
     "node-sass": "latest",
     "bower": "latest",
     "watch": "latest",

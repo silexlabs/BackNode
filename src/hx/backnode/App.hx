@@ -23,11 +23,13 @@ class App {
     public var wysiwyg: Wysiwyg;
 
     private var stageWindow:DOMWindow;
+    private var editorInstances:Array<Editor>;
 
     public function new (element: Element) {
         initCE('ce-js');
         initStage(element);
         initTools();
+        editorInstances = new Array<Editor>();
     }
 
     private function initCE(id: String): Void {
@@ -52,8 +54,15 @@ class App {
         tools.onOpen(function(e: Event): Void {
             ce.pick(onFileSelected, onError);
         });
-        tools.onStartEdition(function(e: Event){
-            makeFieldEditable();
+        tools.onStartEdition(function(isEditionOn: Bool){
+            if(isEditionOn){
+                makeFieldEditable();
+            }
+            else{
+                for(inst in editorInstances)
+                    inst.destroy();
+            }
+            stageWindow.document.body.classList.toggle("edition-on");
         });
     }
 
@@ -69,7 +78,7 @@ class App {
             var elem: Element = cast node;
             elem.contentEditable = "true";
             // Activate inline edition
-            untyped __js__("CKEDITOR.inline(elem);");
+            editorInstances.push(untyped __js__("CKEDITOR.inline(elem);"));
         }
 
         wysiwyg.setOnSelect(function(){
@@ -84,6 +93,7 @@ class App {
             wysiwyg.setDocument(doc);
             // Store iframe window
             stageWindow = doc.defaultView;
+            wysiwyg.addTempStyle("http://localhost:6969/editor.css");
 
             return doc;
         });

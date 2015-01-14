@@ -47,7 +47,7 @@
     "build:html": "jade < ./src/jade/Index.jade > ./dist/index.html",
     "watch:html": "watch 'npm run build:html' src/jade",
 
-    "build:css": "node-sass ./src/scss/Index.scss ./dist/backnode.css",
+    "build:css": "node-sass ./src/scss/Index.scss ./dist/backnode.css && node-sass ./src/scss/editor/Editor.scss ./dist/editor.css",
     "watch:css": "watch 'npm run build:css' src/scss",
 
     "build:editor": "./submodules/ckeditor-dev/dev/builder/build.sh",

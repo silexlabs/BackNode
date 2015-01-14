@@ -1,0 +1,13 @@
+.edition-on [data-bn=text]{
+	border: 3px solid #8CC152;
+	padding: 5px;
+}
+
+.edition-on [data-bn=text]:hover{
+	border-color: #A0D468;
+}
+
+.edition-on [data-bn=text]:focus{
+	border-color: #4FC1E9;
+	outline: 0;
+}

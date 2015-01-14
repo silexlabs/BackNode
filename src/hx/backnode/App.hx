@@ -23,12 +23,13 @@ class App {
     public var wysiwyg: Wysiwyg;
 
     private var stageWindow:DOMWindow;
-    private var editorInstance:Editor;
+    private var editorInstances:Array<Editor>;
 
     public function new (element: Element) {
         initCE('ce-js');
         initStage(element);
         initTools();
+        editorInstances = new Array<Editor>();
     }
 
     private function initCE(id: String): Void {
@@ -58,7 +59,8 @@ class App {
                 makeFieldEditable();
             }
             else{
-                editorInstance.destroy();
+                for(inst in editorInstances)
+                    inst.destroy();
             }
             stageWindow.document.body.classList.toggle("edition-on");
         });
@@ -76,7 +78,7 @@ class App {
             var elem: Element = cast node;
             elem.contentEditable = "true";
             // Activate inline edition
-            editorInstance = untyped __js__("CKEDITOR.inline(elem);");
+            editorInstances.push(untyped __js__("CKEDITOR.inline(elem);"));
         }
 
         wysiwyg.setOnSelect(function(){

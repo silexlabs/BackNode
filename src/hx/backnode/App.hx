@@ -56,7 +56,7 @@ class App {
     private function initTools(): Void {
         tools = new ToolsView();
 
-        // Just import button
+        // only display import button
         tools.state = State.INIT;
 
         // when a click append on import button
@@ -66,36 +66,61 @@ class App {
 
         // when a click append on cancel button
         tools.onCancel(function(e: Event): Void {
+            makeFieldEditable(false);
+            tools.switchEdition(false);
             onFileSelected(fileSelected);
         });
 
-        tools.onStartEdition(function(isEditionOn: Bool){
-            if (isEditionOn) {
-                makeFieldEditable();
-            }
-            else {
-                for (inst in editorInstances)
-                    inst.destroy();
-            }
-            stageWindow.document.body.classList.toggle("edition-on");
+        // when a click append on save button
+        tools.onSave(function(e: Event) {
+            makeFieldEditable(false);
+            tools.switchEdition(false);
+
+            var content: String = stageWindow.document.body.innerHTML;
+            ce.write(fileSelected, content, function(b: CEBlob){
+                stageWindow.alert("file saved!");
+            }, function(e: Dynamic){
+                stageWindow.alert("error!");
+                trace(e);
+            });
         });
+
+        tools.onStartEdition(makeFieldEditable);
     }
 
-    private inline function makeFieldEditable():Void
+    private inline function makeFieldEditable(editable: Bool):Void
     {
-        // Activate Wysiwyg selection
-        wysiwyg.setSelectionMode(true);
-
-        // Let edition only with code activation
-        CKEditor.disableAutoInline = true;
+        // first call
+        if (editorInstances.length == 0) {
+            initFieldEditable();
+        }
 
         for(node in stageWindow.document.querySelectorAll("[data-bn=text]")){
             var elem: Element = cast node;
-            elem.contentEditable = "true";
-            // Activate inline edition
-            editorInstances.push(untyped __js__("CKEDITOR.inline(elem);"));
+            elem.contentEditable = Std.string(editable);
+            if (editable) {
+                // Activate CKEditor inline edition
+                editorInstances.push(untyped __js__("CKEDITOR.inline(elem)"));
+            }
         }
 
+        if (!editable) {
+            for (inst in editorInstances) {
+                inst.destroy();
+            }
+            // reset array, calling destroy on a previous destroyed instance throw an error
+            editorInstances = new Array<Editor>();
+        }
+
+        stageWindow.document.body.classList.toggle("edition-on");
+    }
+
+    private function initFieldEditable(): Void {
+        // Let edition only with code activation
+        CKEditor.disableAutoInline = true;
+        // Activate Wysiwyg selection
+        wysiwyg.setSelectionMode(true);
+        // Fix ?
         wysiwyg.setOnSelect(function(){
             var selected = wysiwyg.getSelected();
             selected[0].focus();

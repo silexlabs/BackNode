@@ -49,6 +49,8 @@ extern class Wysiwyg {
 extern class CloudExplorer {
     static function get(?id: String): CloudExplorer;
     public function pick(cbk: CEBlob -> Void, err: Dynamic -> Void): Void;
+    public function exportFile(blob: CEBlob, options: {mimetype: String}, cbk: CEBlob -> Void): Void;
+    public function write(blob: CEBlob, data: String, cbk: CEBlob -> Void, cbkError: Dynamic -> Void): Void;
 }
 
 
@@ -62,7 +64,7 @@ extern class FileService {
 extern class CKEditor{
     public static var disableAutoInline:Bool;
     public static var currentInstance: Editor;
-    
+
     // Doesn't work. Waiting for https://github.com/HaxeFoundation/haxe/issues/3701
     @:native("inline")
     public static function inlineEdition(element: Element):Editor;

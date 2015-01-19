@@ -20,7 +20,7 @@ typedef ButtonTool = {
     show: Void -> Void
 }
 
-class Tools {
+class ToolsView {
 
     public var state(default, set): State;
     public var currentState: State;
@@ -37,14 +37,29 @@ class Tools {
     }
 
     public function onOpen(cbk: Event -> Void): Void {
-        buttons.open.dom.addEventListener('click', cbk , false);
+        buttons.open.dom.addEventListener('click', cbk, false);
     }
 
-    public function onStartEdition(cbk: Bool -> Void):Void {
-        buttons.editionSwitch.dom.addEventListener('click', function(e){
-            cbk(buttons.editionSwitch.dom.classList.toggle("switch-on"));
-        } , false);
+    public function onCancel(cbk: Event -> Void): Void {
+        buttons.cancel.dom.addEventListener('click', cbk, false);
+    }
 
+    public function onSave(cbk: Event -> Void): Void {
+        buttons.save.dom.addEventListener('click', cbk, false);
+    }
+
+    public function onStartEdition(cbk: Bool -> Void): Void {
+        buttons.editionSwitch.dom.addEventListener('click', function (e) {
+            cbk(switchEdition());
+        } , false);
+    }
+
+    public function switchEdition(?forceValue: Bool): Bool {
+        if (forceValue || forceValue == false) {
+            return buttons.editionSwitch.dom.classList.toggle("switch-on", forceValue);
+        } else {
+            return buttons.editionSwitch.dom.classList.toggle("switch-on");
+        }
     }
 
     public function set_state(state: State): State {
@@ -79,13 +94,13 @@ class Tools {
     private function onStateChanged(state: State): Void {
         switch(state) {
             case State.INIT:
-                switchEditionMode(false);
+                fileSelectionMode(false);
             case State.FILE_SELECTED:
-                switchEditionMode(true);
+                fileSelectionMode(true);
         }
     }
 
-    private function switchEditionMode(value: Bool): Void {
+    private function fileSelectionMode(value: Bool): Void {
         for (button in Reflect.fields(buttons)) {
             if (value) {
                 Reflect.field(buttons, button).show();
@@ -95,4 +110,5 @@ class Tools {
         }
         buttons.open.show();
     }
+
 }

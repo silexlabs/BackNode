@@ -76,12 +76,13 @@ class App {
             makeFieldEditable(false);
             tools.switchEdition(false);
 
-            var content: String = stageWindow.document.body.innerHTML;
+            var content: String = stageWindow.document.head.innerHTML + stageWindow.document.body.innerHTML;
             ce.write(fileSelected, content, function(b: CEBlob){
-                stageWindow.alert("file saved!");
+                //stageWindow.alert("file saved!");
+                trace("file saved!");
             }, function(e: Dynamic){
-                stageWindow.alert("error!");
-                trace(e);
+                //stageWindow.alert("error!");
+                trace("Error: "+e);
             });
         });
 
@@ -95,7 +96,7 @@ class App {
             initFieldEditable();
         }
 
-        for(node in stageWindow.document.querySelectorAll("[data-bn=text]")){
+        for (node in stageWindow.document.querySelectorAll("[data-bn=text]")){
             var elem: Element = cast node;
             elem.contentEditable = Std.string(editable);
             if (editable) {

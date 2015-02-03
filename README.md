@@ -16,6 +16,9 @@ This git repository is using [submodules](http://www.git-scm.com/book/en/v2/Git-
 * [node.js](http://nodejs.org/) installed
 * [NPM](https://www.npmjs.com/) installed
 * [Haxe](http://haxe.org/download/) installed
+* [Bower](http://bower.io/#install-bower) installed
+* [Jade](http://jade-lang.com/command-line/) installed
+* [Sass](http://sass-lang.com/install) installed
 * [RSYNC](http://www.rsync.net/resources/howto/windows_rsync.html) (windows only)
 
 ```shell

@@ -8,6 +8,7 @@ import js.html.Element;
 import js.html.Event;
 
 import Externs;
+import js.html.ImageElement;
 import js.html.TextAreaElement;
 import backnode.views.ToolsView;
 import backnode.views.StageView;
@@ -125,6 +126,13 @@ class App {
         wysiwyg.setOnSelect(function(){
             var selected = wysiwyg.getSelected();
             selected[0].focus();
+
+            if(selected[0].tagName.toLowerCase() == "img" && selected[0].hasAttribute("data-bn") && selected[0].getAttribute("data-bn") == "img"){
+                ce.pick(function(blob: CEBlob){
+                    var img: ImageElement = cast selected[0];
+                    img.src = blob.url;
+                    }, onError);
+            }
         });
     }
 

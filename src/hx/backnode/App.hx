@@ -8,6 +8,7 @@ import js.html.Element;
 import js.html.Event;
 
 import Externs;
+import js.html.ImageElement;
 import js.html.TextAreaElement;
 import backnode.views.ToolsView;
 import backnode.views.StageView;
@@ -76,12 +77,13 @@ class App {
             makeFieldEditable(false);
             tools.switchEdition(false);
 
-            var content: String = stageWindow.document.body.innerHTML;
+            var content: String = stageWindow.document.head.innerHTML + stageWindow.document.body.innerHTML;
             ce.write(fileSelected, content, function(b: CEBlob){
-                stageWindow.alert("file saved!");
+                //stageWindow.alert("file saved!");
+                trace("file saved!");
             }, function(e: Dynamic){
-                stageWindow.alert("error!");
-                trace(e);
+                //stageWindow.alert("error!");
+                trace("Error: "+e);
             });
         });
 
@@ -95,7 +97,7 @@ class App {
             initFieldEditable();
         }
 
-        for(node in stageWindow.document.querySelectorAll("[data-bn=text]")){
+        for (node in stageWindow.document.querySelectorAll("[data-bn=text]")){
             var elem: Element = cast node;
             elem.contentEditable = Std.string(editable);
             if (editable) {
@@ -124,6 +126,13 @@ class App {
         wysiwyg.setOnSelect(function(){
             var selected = wysiwyg.getSelected();
             selected[0].focus();
+
+            if(selected[0].tagName.toLowerCase() == "img" && selected[0].hasAttribute("data-bn") && selected[0].getAttribute("data-bn") == "img"){
+                ce.pick(function(blob: CEBlob){
+                    var img: ImageElement = cast selected[0];
+                    img.src = blob.url;
+                    }, onError);
+            }
         });
     }
 

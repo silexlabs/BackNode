@@ -143,7 +143,7 @@ class App {
             wysiwyg.setDocument(doc);
             // Store iframe window
             stageWindow = doc.defaultView;
-            wysiwyg.addTempStyle("http://localhost:6969/editor.css");
+            wysiwyg.addTempStyle("/editor.css");
 
             return doc;
         });

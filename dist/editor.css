@@ -1,0 +1,12 @@
+.edition-on [data-bn-editable] {
+  border: 3px solid #8CC152;
+  padding: 5px; }
+
+.edition-on [data-bn-editable]:hover {
+  border-color: #A0D468; }
+
+.edition-on [data-bn-editable]:focus {
+  border-color: #4FC1E9;
+  outline: 0; }
+
+/*# sourceMappingURL=editor.css.map */

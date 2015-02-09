@@ -1,0 +1,138 @@
+#stage {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 120px;
+  background: transparent; }
+  #stage iframe {
+    background-color: #323b46;
+    background-image: url('/img/import-file.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    box-shadow: #1f252c 0 0 30px;
+    border: 5px solid #29313c;
+    border-radius: 5px; }
+
+#resolution {
+  font-family: Arial;
+  background-color: #29313c;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 5px;
+  width: 100px;
+  text-align: center;
+  color: white;
+  font-size: 16px; }
+  #resolution i {
+    margin-left: 5px; }
+  #resolution ul {
+    position: absolute;
+    list-style: none;
+    bottom: 28px;
+    left: 0;
+    overflow: hidden;
+    border: 3px solid #29313c;
+    background: #29313c;
+    margin: 0;
+    padding: 0; }
+    #resolution ul li {
+      border-bottom: 3px solid #29313c;
+      background: #323b46;
+      padding: 5px 0;
+      width: 110px; }
+    #resolution ul li:hover {
+      background: #424c58; }
+
+#resolution:hover {
+  background: #323b46;
+  cursor: pointer; }
+
+#ce-js {
+  z-index: 100; }
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%; }
+
+body {
+  background-image: url('/img/background.png');
+  background-color: #323b46 !important;
+  background-position: center center; }
+
+#tools {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  width: 120px;
+  height: 100%;
+  background-color: #29313c;
+  text-align: center;
+  color: #fff;
+  overflow: hidden; }
+  #tools #menu {
+    padding-top: 30px; }
+    #tools #menu ul {
+      font-size: 13px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+      margin-top: 30px; }
+      #tools #menu ul li {
+        color: #50647b;
+        padding: 15px 0 15px 15px;
+        width: auto;
+        background: #1d222a;
+        cursor: pointer; }
+        #tools #menu ul li i {
+          margin-right: 5px; }
+      #tools #menu ul li:hover {
+        color: #fff;
+        background: #39b396; }
+  #tools #editor-switch {
+    width: 88px;
+    height: 27px;
+    margin: 20px auto 0;
+    background-image: url('/img/switch.png');
+    cursor: pointer;
+    background-size: 100% 200%;
+    background-position: 0 0; }
+  #tools #editor-switch.switch-on {
+    background-position: 0px 27px; }
+  #tools #logo {
+    position: fixed;
+    width: 43px;
+    height: 323px;
+    background-image: url('/img/backnode.png');
+    left: 33px;
+    bottom: 15px;
+    -moz-background-size: contain;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center bottom; }
+
+#edition-popup {
+  position: fixed;
+  top: 0;
+  width: 500px;
+  height: 70px;
+  z-index: 101;
+  background-color: white;
+  border: 1px solid black;
+  display: none; }
+  #edition-popup label {
+    margin: 0 5px; }
+  #edition-popup input {
+    display: inline-block; }
+  #edition-popup input[type=text] {
+    margin: 5px auto;
+    width: 90%; }
+  #edition-popup input[type=button] {
+    margin: 10px;
+    float: right; }
+
+/*# sourceMappingURL=backnode.css.map */
+/*# sourceMappingURL=backnode.css.map */

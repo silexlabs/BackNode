@@ -3,6 +3,4 @@
 .cache
 node_modules
 bower_components
-dist
-static/external_lib/
 

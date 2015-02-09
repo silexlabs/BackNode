@@ -1,0 +1,43 @@
+{
+  "name": "responsize",
+  "authors": [
+    "lexoyo <a.hoyau@silexlabs.org>"
+  ],
+  "description": "Responsize is the tool to make any website responsive, quickly and efficiently.",
+  "main": [
+    "dist/responsize.js",
+    "dist/responsize.css"
+  ],
+  "keywords": [
+    "responsive",
+    "design",
+    "tool",
+    "free",
+    "open-source",
+    "mit",
+    "responsive-design",
+    "webapp",
+    "saas"
+  ],
+  "license": "MIT",
+  "homepage": "http://www.responsize.org/",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bower-cloud-explorer": "*"
+  },
+  "_release": "0a00f6bb46",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "0a00f6bb463b08e47c5447e98c84110b557d3e91"
+  },
+  "_source": "git://github.com/silexlabs/responsize.git",
+  "_target": "*",
+  "_originalSource": "responsize"
+}

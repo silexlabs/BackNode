@@ -1,0 +1,102 @@
+@mixin glow() {
+  filter: drop-shadow(0 0 17px rgba(255, 255, 255, 0.8));
+  -webkit-filter: drop-shadow(0 0 17px rgba(255, 255, 255, 0.8));
+}
+
+.toolbar {
+  background-color: $color1;
+  height: $toolbarHeight - 20;
+  width: 100%;
+  position: fixed;
+  padding: 10px;
+
+  ul {
+    padding: 0;
+    margin: 0;
+    border-right-color: $color0;
+    border-right-style: inset;
+    border-right-width: 1px;
+    display: inline-block;
+  }
+  li.device {
+    list-style: none;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50%;
+    width: 40px;
+    height: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    cursor: pointer;
+    opacity: .5;
+    display: inline-block;
+  }
+  .device.selected {
+    @include glow();
+    opacity: 1;
+  }
+  .mobile {
+    background-image: url('assets/iphone-blanc.png');
+  }
+  .mobile-h {
+    background-image: url('assets/iphone-blanc-h.png');
+  }
+  .tablet {
+    background-image: url('assets/ipad-blanc.png');
+  }
+  .desktop {
+    background-image: url('assets/imac-blanc.png');
+  }
+  .button {
+    &.open {
+      background-image: url('assets/open.png');
+    }
+    &.save {
+      background-image: url('assets/save.png');
+    }
+    height: 100%;
+    width: 46px;
+    margin-left: 20px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    cursor: pointer;
+    @include glow();
+    opacity: 1;
+    &.off {
+      opacity: .5;
+    }
+  }
+  .move-element {
+    display: inline-block;
+    margin-left: 15px;
+    .up, .down {
+      width: 60px;
+      height: ($toolbarHeight / 2) - 13;
+      background-size: contain;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+    .up {
+      background-image: url('assets/arrow-up.png');
+      margin-bottom: 6px;
+    }
+    .down{
+      background-image: url('assets/arrow-down.png');
+    }
+    .up, .down {
+      opacity: .5;
+    }
+    .up:hover, .down:hover {
+      @include glow();
+      opacity: 1;
+    }
+    &.disabled {
+      .up, .down, .up:hover, .down:hover {
+        opacity: .1;
+      }
+    }
+  }
+}
+

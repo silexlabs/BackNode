@@ -55,8 +55,7 @@
 
     "build:all": "npm run copy:templates && npm run copy:bower && npm run build:js && npm run build:html && npm run build:css",
 
-    "postinstall": "npm run build:editor && npm run copy:editor",
-    "start": "npm run build:all",
+    "start": "node unifile-server.js",
     "watch": "parallelshell 'npm run watch:js' 'npm run watch:html' 'npm run watch:css'"
   }
 }

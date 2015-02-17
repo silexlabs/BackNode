@@ -3,12 +3,15 @@ package backnode;
 import haxe.Http;
 import haxe.Json;
 
+import js.Browser;
 import js.html.DOMWindow;
 import js.html.Element;
 import js.html.Event;
 
 import Externs;
+import js.html.IFrameElement;
 import js.html.ImageElement;
+import js.html.InputElement;
 import js.html.TextAreaElement;
 import backnode.views.ToolsView;
 import backnode.views.StageView;
@@ -62,6 +65,7 @@ class App {
 
         // when a click append on import button
         tools.onOpen(function(e: Event): Void {
+            tools.switchEdition(false);
             ce.pick(onFileSelected, onError);
         });
 
@@ -74,16 +78,17 @@ class App {
 
         // when a click append on save button
         tools.onSave(function(e: Event) {
-            makeFieldEditable(false);
-            tools.switchEdition(false);
+            // Not sure if we need to keep that. Saving doesn't mean job's finished ;)
+            //makeFieldEditable(false);
+            //tools.switchEdition(false);
 
             var content: String = stageWindow.document.head.innerHTML + stageWindow.document.body.innerHTML;
             ce.write(fileSelected, content, function(b: CEBlob){
-                //stageWindow.alert("file saved!");
-                trace("file saved!");
+                stageWindow.alert("file saved!");
+                //trace("file saved!");
             }, function(e: Dynamic){
-                //stageWindow.alert("error!");
-                trace("Error: "+e);
+                stageWindow.alert("error!");
+                //trace("Error: "+e);
             });
         });
 
@@ -94,19 +99,60 @@ class App {
     {
         // first call
         if (editorInstances.length == 0) {
-            initFieldEditable();
-        }
+            tools.state = EDITION_ON;
+            // Let edition only with code activation
+            CKEditor.disableAutoInline = true;
+            // Activate Wysiwyg selection
+            wysiwyg.setSelectionMode(true);
 
-        for (node in stageWindow.document.querySelectorAll("[data-bn=text]")){
-            var elem: Element = cast node;
-            elem.contentEditable = Std.string(editable);
-            if (editable) {
-                // Activate CKEditor inline edition
-                editorInstances.push(untyped __js__("CKEDITOR.inline(elem)"));
-            }
-        }
+            wysiwyg.setOnSelect(function(){
+                var selected = wysiwyg.getSelected();
+                selected[0].focus();
+                if(tools.state == EDITION_ON && selected[0].hasAttribute("data-bn-editable")){
+                    switch (selected[0].tagName.toLowerCase()) {
+                        case "img":
+                            // Pick image on CE
+                            ce.pick(function(blob: CEBlob){
+                                var img: ImageElement = cast selected[0];
+                                img.src = blob.url;
+                            }, onError);
+                        case "iframe":
+                            // Edit src
+                            var iframe: IFrameElement = cast selected[0];
+                            var popup = Browser.document.getElementById("edition-popup");
+                            
+                            // Display popup
+                            popup.style.top = Browser.window.innerHeight/2 - popup.offsetHeight/2+"px";
+                            popup.style.left = Browser.window.innerWidth/2 - popup.offsetWidth/2+"px";
+                            popup.style.display = "block";
 
-        if (!editable) {
+                            // Default value
+                            var srcInput: InputElement = cast popup.querySelector("input[type=text]");
+                            srcInput.value = iframe.src;
+
+                            for(button in popup.querySelectorAll("input[type=button]")){
+                                cast(button, Element).onclick = function(e: Event) {
+                                    if(cast(e.target, Element).classList.contains("save"))
+                                        iframe.src = srcInput.value;
+                                    // reset style
+                                    popup.removeAttribute("style");
+                                };
+                            }
+
+                        // Text by default
+                        default :
+                            var elem: Element = cast selected[0];
+                            elem.contentEditable = Std.string(editable);
+                            if (editable) {
+                                // Activate CKEditor inline edition
+                                editorInstances.push(untyped __js__("CKEDITOR.inline(elem)"));
+                            }
+                    }
+                }
+            });
+        }
+        else{
+            tools.state = FILE_SELECTED;
             for (inst in editorInstances) {
                 inst.destroy();
             }
@@ -118,22 +164,6 @@ class App {
     }
 
     private function initFieldEditable(): Void {
-        // Let edition only with code activation
-        CKEditor.disableAutoInline = true;
-        // Activate Wysiwyg selection
-        wysiwyg.setSelectionMode(true);
-        // Fix ?
-        wysiwyg.setOnSelect(function(){
-            var selected = wysiwyg.getSelected();
-            selected[0].focus();
-
-            if(selected[0].tagName.toLowerCase() == "img" && selected[0].hasAttribute("data-bn") && selected[0].getAttribute("data-bn") == "img"){
-                ce.pick(function(blob: CEBlob){
-                    var img: ImageElement = cast selected[0];
-                    img.src = blob.url;
-                    }, onError);
-            }
-        });
     }
 
     private function onFileSelected(blob: CEBlob): Void {

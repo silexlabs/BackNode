@@ -40,6 +40,13 @@ html(lang='en')
             i(class='fa fa-save')
             | Save
         #logo
+
+    #edition-popup
+      label(for="src").
+        Src
+      input#src(type="text")
+      input.save(type="button", value="Save")
+      input.cancel(type="button", value="Cancel")
     // backnode app
     include src/jade/App.jade
 

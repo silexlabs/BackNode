@@ -23,7 +23,7 @@ typedef ButtonTool = {
 class ToolsView {
 
     public var state(default, set): State;
-    public var currentState: State;
+    //private var currentState: State;
     public var buttons: Buttons = {
         open: null,
         save: null,
@@ -62,10 +62,10 @@ class ToolsView {
         }
     }
 
-    public function set_state(state: State): State {
-        currentState = state;
-        onStateChanged(currentState);
-        return currentState;
+    private function set_state(state: State): State {
+        this.state = state;
+        onStateChanged(state);
+        return state;
     }
 
     private function initButtons(): Void {
@@ -95,7 +95,7 @@ class ToolsView {
         switch(state) {
             case State.INIT:
                 fileSelectionMode(false);
-            case State.FILE_SELECTED:
+            default:
                 fileSelectionMode(true);
         }
     }

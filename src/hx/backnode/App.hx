@@ -13,9 +13,11 @@ import js.html.IFrameElement;
 import js.html.ImageElement;
 import js.html.InputElement;
 import js.html.TextAreaElement;
+import js.html.AnchorElement;
 import backnode.views.ToolsView;
 import backnode.views.StageView;
 import backnode.model.State;
+
 
 @:expose('backnode.App')
 class App {
@@ -72,6 +74,8 @@ class App {
         // when a click append on cancel button
         tools.onCancel(function(e: Event): Void {
             makeFieldEditable(false);
+            stageWindow.alert("error!");
+                
             tools.switchEdition(false);
             onFileSelected(fileSelected);
         });
@@ -98,12 +102,16 @@ class App {
     private inline function makeFieldEditable(editable: Bool):Void
     {
         // first call
-        if (editorInstances.length == 0) {
-            tools.state = EDITION_ON;
+	if (editorInstances.length == 0) {
+            if (editable) {
+              tools.state = EDITION_ON;
+            }
+            else {
+            }
             // Let edition only with code activation
             CKEditor.disableAutoInline = true;
             // Activate Wysiwyg selection
-            wysiwyg.setSelectionMode(true);
+            wysiwyg.setSelectionMode(editable);
 
             wysiwyg.setOnSelect(function(){
                 var selected = wysiwyg.getSelected();
@@ -138,7 +146,6 @@ class App {
                                     popup.removeAttribute("style");
                                 };
                             }
-
                         // Text by default
                         default :
                             var elem: Element = cast selected[0];
@@ -174,11 +181,47 @@ class App {
             // Store iframe window
             stageWindow = doc.defaultView;
             wysiwyg.addTempStyle("/editor.css");
+            var allRepeatable = doc.querySelectorAll ("[data-bn-repeatable]");
 
+            for (repeatable in allRepeatable) {
+                makeDuplicable (cast repeatable);
+            }
             return doc;
         });
         tools.state = State.FILE_SELECTED;
     }
+
+    private function makeDuplicable (elem : Element) {
+        var elemPlus : AnchorElement = cast elem.querySelector("a.addBtn");
+        if (elemPlus == null) {
+            elemPlus = stageWindow.document.createAnchorElement();
+            elemPlus.href = "#";
+            elemPlus.innerHTML = "Clone+";  
+            elemPlus.classList.add("addBtn");              
+            elem.appendChild (elemPlus);
+            
+        }
+        elemPlus.onclick = function(e:Event) {            
+            e.preventDefault();
+            var clone : Element = cast elem.cloneNode(true);
+            elem.parentElement.insertBefore(clone, elem.nextSibling);
+            makeDuplicable(clone);  
+        };
+
+        var elemMoins : AnchorElement = cast elem.querySelector("a.removeBtn");
+        if (elemMoins == null) {
+            elemMoins = stageWindow.document.createAnchorElement();
+            elemMoins.href = "#";
+            elemMoins.innerHTML = "Remove-";
+            elemMoins.classList.add("removeBtn");                
+            elem.appendChild (elemMoins);
+        }
+        elemMoins.onclick = function(e: Event){
+            e.preventDefault();
+            elem.parentElement.removeChild(elem);
+        };
+    }
+       
 
     private function onError(e: Dynamic): Void {
         try {

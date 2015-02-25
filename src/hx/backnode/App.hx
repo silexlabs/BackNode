@@ -74,8 +74,6 @@ class App {
         // when a click append on cancel button
         tools.onCancel(function(e: Event): Void {
             makeFieldEditable(false);
-            stageWindow.alert("error!");
-                
             tools.switchEdition(false);
             onFileSelected(fileSelected);
         });

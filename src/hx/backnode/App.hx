@@ -113,6 +113,7 @@ class App {
             // Activate Wysiwyg selection
             wysiwyg.setSelectionMode(editable);
 
+
             wysiwyg.setOnSelect(function(){
                 var selected = wysiwyg.getSelected();
                 selected[0].focus();

@@ -100,12 +100,17 @@ class App {
     private inline function makeFieldEditable(editable: Bool):Void
     {
         // first call
-        if (editorInstances.length == 0) {
-            tools.state = EDITION_ON;
+	if (editorInstances.length == 0) {
+            if (editable) {
+              tools.state = EDITION_ON;
+            }
+            else {
+            }
             // Let edition only with code activation
             CKEditor.disableAutoInline = true;
             // Activate Wysiwyg selection
-            wysiwyg.setSelectionMode(true);
+            wysiwyg.setSelectionMode(editable);
+
 
             wysiwyg.setOnSelect(function(){
                 var selected = wysiwyg.getSelected();

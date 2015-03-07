@@ -43,6 +43,7 @@ extern class Wysiwyg {
     public function getOnSelect(): Void -> Void;
     public function addTempStyle(url: String):Void;
     public function addTempScript(url: String):Void;
+    public function getCleanHtml():String;
 }
 
 @:native('ce.api.CloudExplorer')

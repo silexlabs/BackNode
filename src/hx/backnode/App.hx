@@ -13,7 +13,7 @@ import js.html.IFrameElement;
 import js.html.ImageElement;
 import js.html.InputElement;
 import js.html.TextAreaElement;
-import js.html.AnchorElement;
+import js.html.DivElement;
 import backnode.views.ToolsView;
 import backnode.views.StageView;
 import backnode.model.State;
@@ -81,10 +81,11 @@ class App {
         // when a click append on save button
         tools.onSave(function(e: Event) {
             // Not sure if we need to keep that. Saving doesn't mean job's finished ;)
-            //makeFieldEditable(false);
-            //tools.switchEdition(false);
-
-            var content: String = stageWindow.document.head.innerHTML + stageWindow.document.body.innerHTML;
+            // yes we deed to remove edition class for example, we need to clean before save
+            makeFieldEditable(false);
+            tools.switchEdition(false);
+            duplicable(false);
+            var content: String = wysiwyg.getCleanHtml();
             ce.write(fileSelected, content, function(b: CEBlob){
                 stageWindow.alert("file saved!");
                 //trace("file saved!");
@@ -99,18 +100,14 @@ class App {
 
     private inline function makeFieldEditable(editable: Bool):Void
     {
+        // Activate Wysiwyg selection
+        wysiwyg.setSelectionMode(editable);
+
         // first call
-	if (editorInstances.length == 0) {
-            if (editable) {
-              tools.state = EDITION_ON;
-            }
-            else {
-            }
+	    if (editable) {
+            tools.state = EDITION_ON;
             // Let edition only with code activation
             CKEditor.disableAutoInline = true;
-            // Activate Wysiwyg selection
-            wysiwyg.setSelectionMode(editable);
-
 
             wysiwyg.setOnSelect(function(){
                 var selected = wysiwyg.getSelected();
@@ -127,7 +124,7 @@ class App {
                             // Edit src
                             var iframe: IFrameElement = cast selected[0];
                             var popup = Browser.document.getElementById("edition-popup");
-                            
+
                             // Display popup
                             popup.style.top = Browser.window.innerHeight/2 - popup.offsetHeight/2+"px";
                             popup.style.left = Browser.window.innerWidth/2 - popup.offsetWidth/2+"px";
@@ -156,8 +153,7 @@ class App {
                     }
                 }
             });
-        }
-        else{
+        } else {
             tools.state = FILE_SELECTED;
             for (inst in editorInstances) {
                 inst.destroy();
@@ -167,6 +163,7 @@ class App {
         }
 
         stageWindow.document.body.classList.toggle("edition-on");
+        duplicable(!editable);
     }
 
     private function initFieldEditable(): Void {
@@ -180,47 +177,60 @@ class App {
             // Store iframe window
             stageWindow = doc.defaultView;
             wysiwyg.addTempStyle("/editor.css");
-            var allRepeatable = doc.querySelectorAll ("[data-bn-repeatable]");
-
-            for (repeatable in allRepeatable) {
-                makeDuplicable (cast repeatable);
-            }
+            duplicable(true);
             return doc;
         });
         tools.state = State.FILE_SELECTED;
     }
 
-    private function makeDuplicable (elem : Element) {
-        var elemPlus : AnchorElement = cast elem.querySelector("a.addBtn");
-        if (elemPlus == null) {
-            elemPlus = stageWindow.document.createAnchorElement();
-            elemPlus.href = "#";
-            elemPlus.innerHTML = "Clone+";  
-            elemPlus.classList.add("addBtn");              
-            elem.appendChild (elemPlus);
-            
+    private function duplicable (active: Bool): Void {
+        if (active) {
+            var allRepeatable = stageWindow.document.querySelectorAll("[data-bn-repeatable]");
+            for (repeatable in allRepeatable) {
+                makeDuplicable (cast repeatable);
+            }
+        } else {
+            var allAdd = stageWindow.document.querySelectorAll(".addBtn");
+            var allRemove = stageWindow.document.querySelectorAll(".removeBtn");
+            for (btn in allAdd) {
+                stageWindow.document.body.removeChild(btn);
+            }
+            for (btn in allRemove) {
+                stageWindow.document.body.removeChild(btn);
+            }
         }
-        elemPlus.onclick = function(e:Event) {            
+    }
+
+    private function makeDuplicable (elem : Element, ?addRemove: Bool) {
+        var elemPlus : DivElement = stageWindow.document.createDivElement();
+        elemPlus.classList.add("addBtn");
+        elemPlus.style.top = elem.offsetTop + "px";
+        elemPlus.style.left = (elem.offsetLeft - (addRemove ? 50 : 25)) + "px";
+        stageWindow.document.body.appendChild(elemPlus);
+
+        elemPlus.onclick = function(e:Event) {
             e.preventDefault();
             var clone : Element = cast elem.cloneNode(true);
             elem.parentElement.insertBefore(clone, elem.nextSibling);
-            makeDuplicable(clone);  
+            makeDuplicable(clone, true);
         };
 
-        var elemMoins : AnchorElement = cast elem.querySelector("a.removeBtn");
-        if (elemMoins == null) {
-            elemMoins = stageWindow.document.createAnchorElement();
-            elemMoins.href = "#";
-            elemMoins.innerHTML = "Remove-";
-            elemMoins.classList.add("removeBtn");                
-            elem.appendChild (elemMoins);
+        if (addRemove) {
+            var elemMoins : DivElement = stageWindow.document.createDivElement();
+            elemMoins.classList.add("removeBtn");
+            elemMoins.style.top = elem.offsetTop + "px";
+            elemMoins.style.left = (elem.offsetLeft - 25) + "px";
+            stageWindow.document.body.appendChild(elemMoins);
+
+            elemMoins.onclick = function(e: Event){
+                e.preventDefault();
+                stageWindow.document.body.removeChild(elemMoins);
+                stageWindow.document.body.removeChild(elemPlus);
+                elem.parentElement.removeChild(elem);
+            };
         }
-        elemMoins.onclick = function(e: Event){
-            e.preventDefault();
-            elem.parentElement.removeChild(elem);
-        };
     }
-       
+
 
     private function onError(e: Dynamic): Void {
         try {

@@ -1,3 +1,36 @@
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+.tooltip {
+  display: none; }
+
+.tooltip.visible {
+  z-index: 10;
+  display: inline;
+  padding: 5px 0 20px 20px;
+  margin-top: 60px;
+  margin-left: -160px;
+  width: 300px;
+  line-height: 16px;
+  border-radius: 2px;
+  box-shadow: 0px 0px 8px 4px #666;
+  z-index: 20;
+  position: absolute;
+  border: 0;
+  background-color: #000;
+  border: 2px solid #FFF;
+  color: #EEE;
+  font-size: 14px;
+  line-height: 1.5; }
+  .tooltip.visible h1 {
+    font-size: 18px; }
+  .tooltip.visible .callout-img {
+    z-index: 20;
+    position: absolute;
+    border: 0;
+    top: -14px;
+    left: 120px; }
+
 .stage {
   top: 60px;
   left: 0;
@@ -33,13 +66,12 @@
     position: relative;
     transition: width .5s, top .5s, left .5s, height .5s, transform .5s;
     -webkit-transition: width .5s, top .5s, left .5s, height .5s, transform .5s;
-    -moz-transition: width .5s, top .5s, left .5s, height .5s, transform .5s; }
+    -moz-transition: width .5s, top .5s, left .5s, height .5s, transform .5s;
+    background-color: rgba(255, 255, 255, 0.25); }
 
 .toolbar {
   background-color: #313131;
-  height: 40px;
   width: 100%;
-  position: fixed;
   padding: 10px; }
   .toolbar ul {
     padding: 0;
@@ -70,10 +102,12 @@
     background-image: url('assets/iphone-blanc-h.png'); }
   .toolbar .tablet {
     background-image: url('assets/ipad-blanc.png'); }
+  .toolbar .tablet-h {
+    background-image: url('assets/ipad-blanc-h.png'); }
   .toolbar .desktop {
     background-image: url('assets/imac-blanc.png'); }
   .toolbar .button {
-    height: 100%;
+    height: 40px;
     width: 46px;
     margin-left: 20px;
     display: inline-block;
@@ -88,6 +122,8 @@
       background-image: url('assets/open.png'); }
     .toolbar .button.save {
       background-image: url('assets/save.png'); }
+    .toolbar .button.clear-formatting {
+      background-image: url('assets/clear-formatting.png'); }
     .toolbar .button.off {
       opacity: .5; }
   .toolbar .move-element {

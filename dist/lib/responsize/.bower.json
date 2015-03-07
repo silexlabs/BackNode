@@ -31,11 +31,11 @@
   "dependencies": {
     "bower-cloud-explorer": "*"
   },
-  "_release": "0a00f6bb46",
+  "_release": "28ba85eb3b",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "0a00f6bb463b08e47c5447e98c84110b557d3e91"
+    "commit": "28ba85eb3bbc79f6a0630f95116edfef2cf62a73"
   },
   "_source": "git://github.com/silexlabs/responsize.git",
   "_target": "*",

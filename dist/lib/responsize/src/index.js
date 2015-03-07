@@ -17,6 +17,11 @@ window['initResponsizeApp'] = function initResponsizeApp() {
 }
 
 
+window.onerror = function(message, url, lineNumber) {
+  window['ga']('send', 'Uncaught error', message, url, lineNumber);
+};
+
+
 function getQueryParams(qs) {
   qs = qs.split("+").join(" ");
   var params = {}, tokens, re = /[?&]?([^=]+)=([^&]*)/g;

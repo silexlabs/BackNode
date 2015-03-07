@@ -2,8 +2,8 @@ goog.provide('rsz.App');
 
 goog.require('rsz.Toolbar');
 goog.require('rsz.Stage');
-goog.require('rsz.Wysiwyg');
-goog.require('rsz.Responsizer');
+//goog.require('rsz.Wysiwyg');
+//goog.require('rsz.Responsizer');
 goog.require('rsz.FileService');
 
 
@@ -32,35 +32,40 @@ class App {
 
 
     /**
-     * @type {Wysiwyg}
-     */
+     * type {Wysiwyg}
+     *
     this.wysiwyg = new Wysiwyg();
 
 
     /**
-     * @type {Responsizer}
-     */
+     * type {Responsizer}
+     *
     this.responsizer = new Responsizer();
 
 
     /**
      * @type {FileService}
      */
-    this.fileService= new FileService();
+    this.fileService = new FileService();
 
 
+    // **
     // bind components together
+    // toolbar
     this.toolbar.onSize = (w, h) => this.stage.setSize(w, h);
     this.toolbar.onOpen = () => this.fileService.open().then((url) => this.onOpen(url));
+/*
+    this.toolbar.onClearFormatting = (element) => this.responsizer.clearFormatting(element, this.stage.getSize().width);
     this.toolbar.onSave = () => this.fileService.save(
 			this.wysiwyg.getCleanHtml()).then(() => this.onSave());
     // selection
-    this.wysiwyg.selectFilter = (element) => {return this.hasSiblings(element)};
+    this.wysiwyg.selectFilter = (element) => {return this.isBootstrapCol(element)};
     this.wysiwyg.onSelect = () => {
       this.toolbar.setSelection(this.wysiwyg.getSelected());
       this.toolbar.setDirty(true);
     };
-    // resize
+
+    // wysiwyg
     this.wysiwyg.filterBoundingBox = (element, rect) => {
       this.toolbar.setDirty(true);
       this.responsizer.setWidth(
@@ -73,13 +78,14 @@ class App {
     this.wysiwyg.onResized = () => {
     };
 
+    // add wysiwyg style sheet in the iframe
+    this.wysiwyg.addTempStyle(window.location.href + 'iframe.css');
+
     // init
     this.wysiwyg.setSelectionMode(true);
     this.wysiwyg.setResizeMode(true);
+*/
     this.toolbar.setDevice(Device.desktop);
-
-    // iframe / wysiwyg style sheet
-    this.wysiwyg.addTempStyle(window.location.href + 'iframe.css');
  }
 
 
@@ -104,13 +110,28 @@ class App {
 
 
   /**
+   * @return {boolean} true if the element has a parent which is a row
+   * @export
+   */
+  isBootstrapCol(element) {
+    return element &&
+      element.parentNode &&
+      element.parentNode.classList &&
+      element.parentNode.classList.contains('row');
+  }
+
+
+  /**
    * a file has been chosen by the user in cloud explorer
    * @param {string} url
    */
   onOpen(url) {
     this.stage.setUrl(url).then((doc) => {
-      this.wysiwyg.setDocument(doc);
+      //this.responsizer.importSilex(doc, this.stage.getSize().width);
+      //this.wysiwyg.setDocument(doc);
       this.toolbar.setSelection([]);
+    }, (e) => {
+      console.error('Error loading website:', e);
     });
   }
 

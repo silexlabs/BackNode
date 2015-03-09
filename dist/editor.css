@@ -9,4 +9,18 @@
   border-color: #4FC1E9;
   outline: 0; }
 
+.addBtn, .removeBtn {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: url('/img/plus.png');
+  background-size: 100% 100%;
+  cursor: pointer; }
+
+.removeBtn {
+  width: 18px;
+  height: 20px;
+  background: url('/img/remove.png');
+  background-size: 100% 100%; }
+
 /*# sourceMappingURL=editor.css.map */

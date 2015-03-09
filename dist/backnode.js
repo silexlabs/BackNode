@@ -77,7 +77,10 @@ backnode.App.prototype = {
 			_g.onFileSelected(_g.fileSelected);
 		});
 		this.tools.onSave(function(e2) {
-			var content = _g.stageWindow.document.head.innerHTML + _g.stageWindow.document.body.innerHTML;
+			_g.makeFieldEditable(false);
+			_g.tools.switchEdition(false);
+			_g.duplicable(false);
+			var content = _g.wysiwyg.getCleanHtml();
 			_g.ce.write(_g.fileSelected,content,function(b) {
 				_g.stageWindow.alert("file saved!");
 			},function(e3) {
@@ -88,10 +91,10 @@ backnode.App.prototype = {
 	}
 	,makeFieldEditable: function(editable) {
 		var _g = this;
-		if(this.editorInstances.length == 0) {
+		this.wysiwyg.setSelectionMode(editable);
+		if(editable) {
 			this.tools.set_state(backnode.model.State.EDITION_ON);
 			CKEDITOR.disableAutoInline = true;
-			this.wysiwyg.setSelectionMode(true);
 			this.wysiwyg.setOnSelect(function() {
 				var selected = _g.wysiwyg.getSelected();
 				selected[0].focus();
@@ -142,6 +145,7 @@ backnode.App.prototype = {
 			this.editorInstances = new Array();
 		}
 		this.stageWindow.document.body.classList.toggle("edition-on");
+		this.duplicable(!editable);
 	}
 	,initFieldEditable: function() {
 	}
@@ -152,9 +156,63 @@ backnode.App.prototype = {
 			_g.wysiwyg.setDocument(doc);
 			_g.stageWindow = doc.defaultView;
 			_g.wysiwyg.addTempStyle("/editor.css");
+			_g.duplicable(true);
 			return doc;
 		});
 		this.tools.set_state(backnode.model.State.FILE_SELECTED);
+	}
+	,duplicable: function(active) {
+		if(active) {
+			var allRepeatable = this.stageWindow.document.querySelectorAll("[data-bn-repeatable]");
+			var _g = 0;
+			while(_g < allRepeatable.length) {
+				var repeatable = allRepeatable[_g];
+				++_g;
+				this.makeDuplicable(repeatable);
+			}
+		} else {
+			var allAdd = this.stageWindow.document.querySelectorAll(".addBtn");
+			var allRemove = this.stageWindow.document.querySelectorAll(".removeBtn");
+			var _g1 = 0;
+			while(_g1 < allAdd.length) {
+				var btn = allAdd[_g1];
+				++_g1;
+				this.stageWindow.document.body.removeChild(btn);
+			}
+			var _g2 = 0;
+			while(_g2 < allRemove.length) {
+				var btn1 = allRemove[_g2];
+				++_g2;
+				this.stageWindow.document.body.removeChild(btn1);
+			}
+		}
+	}
+	,makeDuplicable: function(elem,addRemove) {
+		var _g = this;
+		var elemPlus = this.stageWindow.document.createElement("div");
+		elemPlus.classList.add("addBtn");
+		elemPlus.style.top = elem.offsetTop + "px";
+		elemPlus.style.left = elem.offsetLeft - (addRemove?50:25) + "px";
+		this.stageWindow.document.body.appendChild(elemPlus);
+		elemPlus.onclick = function(e) {
+			e.preventDefault();
+			var clone = elem.cloneNode(true);
+			elem.parentElement.insertBefore(clone,elem.nextSibling);
+			_g.makeDuplicable(clone,true);
+		};
+		if(addRemove) {
+			var elemMoins = this.stageWindow.document.createElement("div");
+			elemMoins.classList.add("removeBtn");
+			elemMoins.style.top = elem.offsetTop + "px";
+			elemMoins.style.left = elem.offsetLeft - 25 + "px";
+			this.stageWindow.document.body.appendChild(elemMoins);
+			elemMoins.onclick = function(e1) {
+				e1.preventDefault();
+				_g.stageWindow.document.body.removeChild(elemMoins);
+				_g.stageWindow.document.body.removeChild(elemPlus);
+				elem.parentElement.removeChild(elem);
+			};
+		}
 	}
 	,onError: function(e) {
 		try {

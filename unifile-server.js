@@ -73,6 +73,37 @@ options.staticFolders.push(
 // unifile server
 app.use('/api', unifile.middleware(express, app, options));
 
+function setDebugMode(debug){
+    if(debug && !isDebug){
+        process.removeListener('uncaughtException', onCatchError);
+
+        // DEBUG ONLY
+        console.warn('Running server in debug mode');
+        // define users (login/password) wich will be authorized to access the www folder (read and write)
+        options.www.USERS = {
+            'admin': 'admin'
+        }
+    }
+    if(!debug && isDebug){
+        // PRODUCTION ONLY
+        console.warn('Running server in production mode');
+        // catch all errors and prevent nodejs to crash, production mode
+        process.on('uncaughtException', onCatchError);
+        // reset debug
+        options.www.USERS = {};
+    }
+}
+
+// get command line args
+var debug = false;
+for (var i in process.argv){
+    var val = process.argv[i];
+    if (val == '-debug') debug = true;
+}
+
+// debug or production mode
+setDebugMode(debug);
+
 // server 'loop'
 var port = process.env.PORT || 6969;
 app.listen(port, function() {

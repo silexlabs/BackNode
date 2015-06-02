@@ -36,7 +36,7 @@ class StageView {
         var r: Element = Browser.document.getElementById('resolution-current');
         r.parentElement.addEventListener('click', switchPresets, true);
 
-        var presetButtons: NodeList = r.parentElement.getElementsByTagName('li');
+        var presetButtons = r.parentElement.getElementsByTagName('li');
         for (b in Reflect.fields(presetButtons)) {
             var f: Node = cast Reflect.field(presetButtons, b);
             if (f.addEventListener != null) {

@@ -9,6 +9,7 @@ import js.html.Element;
 import js.html.Event;
 
 import Externs;
+import js.html.DOMElement;
 import js.html.IFrameElement;
 import js.html.ImageElement;
 import js.html.InputElement;
@@ -17,7 +18,6 @@ import js.html.DivElement;
 import backnode.views.ToolsView;
 import backnode.views.StageView;
 import backnode.model.State;
-
 
 @:expose('backnode.App')
 class App {
@@ -80,8 +80,6 @@ class App {
 
         // when a click append on save button
         tools.onSave(function(e: Event) {
-            // Not sure if we need to keep that. Saving doesn't mean job's finished ;)
-            // yes we deed to remove edition class for example, we need to clean before save
             makeFieldEditable(false);
             tools.switchEdition(false);
             duplicable(false);
@@ -160,6 +158,12 @@ class App {
             }
             // reset array, calling destroy on a previous destroyed instance throw an error
             editorInstances = new Array<Editor>();
+            var nodes = stageWindow.document.querySelectorAll('[contenteditable]');
+            for(node in nodes){
+              if(Std.is(node, DOMElement)){
+                cast(node, DOMElement).removeAttribute('contenteditable');
+              }
+            }
         }
 
         stageWindow.document.body.classList.toggle("edition-on");
